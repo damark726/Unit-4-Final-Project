@@ -4,11 +4,10 @@ const path = require("path");
 const logger = require("morgan");
 const bodyParser = require("body-parser");
 const methodOverride = require("method-override");
-const cookieParser = require('cookie-parser');
-const session = require('express-session');
-const passport = require('passport');
-// const axios = require('axios');
-require('dotenv').config();
+const cookieParser = require("cookie-parser");
+const session = require("express-session");
+const passport = require("passport");
+require("dotenv").config();
 const PORT = process.env.PORT || 3001;
 //=========================================================================================================================================
 app.use(logger("dev"));
@@ -25,12 +24,12 @@ app.use(session({
 }));
 //=========================================================================================================================================
 app.get("/", (req, res) => {
-  res.send("Welcome");
+  res.json(req.user);
 });
 
-app.use('/favorites', require('./routes/movie-routes'));
+app.use("/favorites", require("./routes/manganime-routes"));
 
-app.use('/auth', require('./routes/auth-routes'))
+app.use("/auth", require("./routes/auth-routes"))
 
 app.use("*", (req, res) => {
   res.status(404).send("<h1>Not over here buddy</h1>");

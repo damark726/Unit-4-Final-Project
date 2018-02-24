@@ -2,15 +2,13 @@ import React, {Component} from "react";
 import {Link} from "react-router-dom";
 
 class SingleManga extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {};
-    this.renderTitles = this.renderTitles.bind(this);
   }
 
   componentDidMount() {
-    let mangaId = Number(this.props.match.params.id);
-    fetch(`https://kitsu.io/api/edge/manga/${mangaId}`)
+    fetch(`https://kitsu.io/api/edge${this.props.match.url}`)
     .then(data => data.json())
     .then(data => {
       this.setState({
