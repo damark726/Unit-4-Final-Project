@@ -5,7 +5,7 @@ const methodOverride = require("method-override");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 require("dotenv").config();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 //============================================================================================================================
 app.use(morgan("dev"))
 
@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({
 app.use(express.static("build"));
 
 app.get("/", (req, res) => {
-  res.json(req.user);
+  res.send("<h1>Welcome</h1>")
 });
 
 

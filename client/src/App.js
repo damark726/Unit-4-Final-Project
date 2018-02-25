@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import "./App.css";
-import {Route} from "react-router-dom";
+import {BrowserRouter, Switch, Route} from "react-router-dom";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Header from "./components/Header";
@@ -16,19 +16,23 @@ import Footer from "./components/Footer";
 class App extends Component {
   render() {
     return (
+      <BrowserRouter>
         <div className="App">
           <Header />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/register" component={Register} />
-          <Route exact path="/anime/:id" component={SingleAnime} />
-          <Route exact path="/manga/:id" component={SingleManga} />
-          <Route exact path="/anime" component={AnimeHome} />
-          <Route exact path="/manga" component={MangaHome} />
-          <Route exact path="/favorites" component={FavoritesList} />
-          <Route exact path="/favorites/add" component={AddFavorite}/>
-          <Route exact path="/" component={Home} />
+          <Switch>
+            <Route path="/login" component={Login} />
+            <Route path="/register" component={Register} />
+            <Route path="/anime/:id" component={SingleAnime} />
+            <Route path="/manga/:id" component={SingleManga} />
+            <Route path="/anime" component={AnimeHome} />
+            <Route path="/manga" component={MangaHome} />
+            <Route path="/favorites/add" component={AddFavorite}/>
+            <Route path="/favorites" component={FavoritesList} />
+            <Route path="/" component={Home} />
+          </Switch>
           <Footer/>
         </div>
+      </BrowserRouter>
     );
   }
 }

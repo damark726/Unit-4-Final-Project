@@ -1,20 +1,22 @@
 const db = require("../db/config");
-
 const Manganime = {};
-
-Manganime.findAll = id => {
-  return db.query(`
-    SELECT *, series.id FROM series
-    JOIN users ON series.user_id = users.id
-    WHERE users.id = $1
-    `, id)
+//============================================================================================================================
+Manganime.findAll = () => {
+  return db.query(`SELECT * FROM series`);
 };
 
-
+// Manganime.findAll = id => {
+//   return db.query(`
+//     SELECT *, series.id FROM series
+//     JOIN users ON series.user_id = users.id
+//     WHERE users.id = $1
+//     `, id)
+// };
+//============================================================================================================================
 Manganime.findById = id => {
   return db.oneOrNone(`SELECT * FROM series WHERE id = $1`,[id]);
 };
-
+//============================================================================================================================
 Manganime.create = (series) => {
   console.log("created series");
   return db.one(
@@ -26,8 +28,7 @@ Manganime.create = (series) => {
     [series.title, series.url, series.episodes_watched, series.user_id]
   );
 };
-
-
+//============================================================================================================================
 Manganime.update = (series, id) => {
   console.log("update working");
   return db.oneOrNone(
@@ -43,8 +44,7 @@ Manganime.update = (series, id) => {
   [series.title, series.url, series.episodes_watched, series.user_id, id]
     );
 };
-
-
+//============================================================================================================================
 Manganime.delete = id => {
   console.log("model delete running");
   return db.none(
@@ -55,7 +55,5 @@ Manganime.delete = id => {
     [id]
   );
 };
-
-
-
+//============================================================================================================================
 module.exports = Manganime;

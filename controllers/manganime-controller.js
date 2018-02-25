@@ -2,7 +2,8 @@ const Manganime = require("../models/manganime");
 const manganimeController = {};
 //============================================================================================================================
 manganimeController.index = (req, res) => {
- Manganime.findAll(req.user.id)
+ // Manganime.findAll(req.user.id)
+ Manganime.findAll()
    .then(manganimes => {
      res.json({
        data: manganimes

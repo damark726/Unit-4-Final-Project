@@ -6,13 +6,16 @@ class Login extends Component {
   constructor() {
     super();
     this.state = {
+      email: "",
       username: "",
       password: "",
+      loggedInName: "",
       fireRedirect: false
-    }
+    };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
+
   handleChange(event) {
     let name = event.target.name;
     let value = event.target.value;
@@ -23,30 +26,26 @@ class Login extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    axios({
-      url: '/auth/login',
-      method: 'POST',
-      data: {
-        username: this.state.username,
-        password: this.state.password
-      }
+    axios.post("/auth/login", {
+      email: this.state.email,
+      username: this.state.username,
+      password: this.state.password,
     })
     .then( data => {
-      console.log(data)
+      console.log(data);
+      this.setState({
+        fireRedirect: true
+      })
     })
-    .catch( err => {
-      console.log(err)
-    })
+    .catch(err => console.log(err))
     event.target.reset()
   }
 
 
   render() {
-    console.log(this.state)
     return (
       <div className="Login">
-
-        <div id="log-in">Please Log In</div>
+        {this.state.fireRedirect ? <div id="log-in">You are Logged In</div> : <div id="log-in">Please Log In</div> }
 
         <form onSubmit={this.handleSubmit}>
           <input type="text" onChange={this.handleChange} name="username" placeholder="username" />
@@ -56,7 +55,8 @@ class Login extends Component {
           <input type="submit" value="Sign In" />
         </form>
 
-        {this.state.fireRedirect ? <Redirect to="/" /> : ""}
+        {/* {this.state.fireRedirect ? <Redirect to="/" /> : ""} */}
+
       </div>
     )
   }
