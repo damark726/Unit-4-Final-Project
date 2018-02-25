@@ -8,4 +8,4 @@ CREATE TABLE IF NOT EXISTS series (
   url TEXT,
   episodes_watched INTEGER,
   user_id INTEGER REFERENCES users(id)
-)
+);
