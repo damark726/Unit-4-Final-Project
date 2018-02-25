@@ -8,6 +8,6 @@ manganimeRouter.get("/:id", manganimeController.show);
 // manganimeRouter.get("/new", manganimeController.new);
 // moviesRouter.get("/edit/:id", moviesController.edit);
 // manganimeRouter.put("/:id", manganimeController.update);
-// manganimeRouter.delete("/:id", manganimeController.delete);
+manganimeRouter.delete("/:id", manganimeController.delete);
 
 module.exports = manganimeRouter;
