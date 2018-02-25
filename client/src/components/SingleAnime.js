@@ -2,14 +2,13 @@ import React, {Component} from "react";
 import {Link} from "react-router-dom";
 
 class SingleAnime extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
+  constructor() {
+    super();
+    this.state = {}
   }
 
   componentDidMount() {
-    let animeId = Number(this.props.match.params.id);
-    fetch(`https://kitsu.io/api/edge/anime/${animeId}`)
+    fetch(`https://kitsu.io/api/edge${this.props.match.url}`)
     .then(data => data.json())
     .then(data => {
       this.setState({
@@ -26,6 +25,8 @@ class SingleAnime extends Component {
       return <div className="title">{this.state.singleAnime.attributes.titles.en}</div>
     } else if (this.state.singleAnime.attributes.titles.en === null) {
       return <div className="title">{this.state.singleAnime.attributes.titles.en_jp}</div>
+    } else if (this.state.singleAnime.attributes.titles.en_jp === null) {
+      return <div className="title">{this.state.singleAnime.attributes.titles.ja_jp}</div>
     }
   }
 

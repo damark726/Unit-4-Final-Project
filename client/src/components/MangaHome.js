@@ -1,6 +1,5 @@
 import React, {Component} from "react";
 import {Link} from "react-router-dom";
-import SingleManga from './SingleManga';
 
 class MangaHome extends Component {
   constructor() {
@@ -32,9 +31,7 @@ class MangaHome extends Component {
   render() {
     return (
       <div className="MangaHome">
-        {/* <Link to="/anime">Anime</Link> */}
         {this.state.mostPopularMangas ? this.state.mostPopularMangas : ""}
-        {this.state.singleManga ? <SingleManga /> : ""}
       </div>
     )
   }
