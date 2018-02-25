@@ -4,7 +4,7 @@ const manganimeRouter = express.Router();
 
 manganimeRouter.get("/", manganimeController.index);
 manganimeRouter.get("/:id", manganimeController.show);
-// manganimeRouter.post("/", manganimeController.create);
+manganimeRouter.post("/", manganimeController.create);
 // manganimeRouter.get("/new", manganimeController.new);
 // moviesRouter.get("/edit/:id", moviesController.edit);
 // manganimeRouter.put("/:id", manganimeController.update);

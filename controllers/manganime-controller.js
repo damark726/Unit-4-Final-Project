@@ -32,23 +32,23 @@ manganimeController.show = (req, res) => {
 //  res.render("manganimes/new")
 // };
 //========================================================================================================================================
-// manganimeController.create = (req, res) => {
-//  Manganime.create({
-//      title: req.body.title,
-//      url: req.body.url,
-//      episodes_watched: req.body.episodes_watched,
-//      user_id: req.user.id
-//    })
-//    .then(manganime => {
-//      res.json({
-//        data: manganime
-//      })
-//    })
-//    .catch(err => {
-//      console.log("This is manganimeController.create not working ===> ", err)
-//      res.status(400).json(err);
-//    });
-// };
+manganimeController.create = (req, res) => {
+ Manganime.create({
+     title: req.body.title,
+     url: req.body.url,
+     episodes_watched: req.body.episodes_watched,
+     user_id: req.user.id
+   })
+   .then(manganime => {
+     res.json({
+       data: manganime
+     })
+   })
+   .catch(err => {
+     console.log("This is manganimeController.create not working ===> ", err)
+     res.status(400).json(err);
+   });
+};
 //========================================================================================================================================
 // manganimeController.edit = (req,res) => {
 //  Manganime.findById(req.params.id)
