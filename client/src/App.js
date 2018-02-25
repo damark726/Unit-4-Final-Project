@@ -1,5 +1,4 @@
 import React, {Component} from "react";
-import "./App.css";
 import {BrowserRouter, Switch, Route} from "react-router-dom";
 import Login from "./components/Login";
 import Register from "./components/Register";
@@ -12,8 +11,9 @@ import SingleManga from "./components/SingleManga";
 import FavoritesList from "./components/FavoritesList";
 import AddFavorite from "./components/AddFavorite";
 import Footer from "./components/Footer";
-
-class App extends Component {
+import "./App.css";
+//========================================================================================================================================
+export default class App extends Component {
   render() {
     return (
       <BrowserRouter>
@@ -36,5 +36,3 @@ class App extends Component {
     );
   }
 }
-
-export default App;
