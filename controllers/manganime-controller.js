@@ -81,15 +81,15 @@ manganimeController.show = (req, res) => {
 //   });
 // };
 //========================================================================================================================================
-// manganimeController.delete = (req, res) => {
-//   Manganime.delete(req.params.id)
-//   .then(manganime => {
-//     res.redirect("/")
-//   })
-//   .catch(err => {
-//     console.log("This is manganimeController.delete not working ===> ", err)
-//     res.status(400).json(err);
-//   });
-// };
+manganimeController.delete = (req, res) => {
+  Manganime.delete(req.params.id)
+  .then(manganime => {
+    res.redirect("/")
+  })
+  .catch(err => {
+    console.log("This is manganimeController.delete not working ===> ", err)
+    res.status(400).json(err);
+  });
+};
 //========================================================================================================================================
 module.exports = manganimeController;
