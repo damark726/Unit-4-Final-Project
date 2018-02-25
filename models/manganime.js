@@ -1,49 +1,54 @@
-const db = require('../db/config');
+const db = require("../db/config");
 const Manganime = {};
-//==================================================================================================================================
-// Manganime.findAll = () => {
-//   return db.query(`SELECT * FROM shows`);
-// };
-
-Manganime.findAll = (id) => {
+//========================================================================================================================================
+Manganime.findAll = id => {
   return db.query(`
-    SELECT *, shows.id FROM shows
-    JOIN users ON shows.user_id = users.id
+    SELECT *, series.id FROM series
+    JOIN users ON series.user_id = users.id
     WHERE users.id = $1
-    `, [id])
+    `, id)
 };
-//==================================================================================================================================
+//========================================================================================================================================
 Manganime.findById = id => {
-  return db.oneOrNone(`SELECT * FROM shows WHERE id = $1`,[id]);
+  return db.oneOrNone(`SELECT * FROM series WHERE id = $1`,[id]);
 };
-//==================================================================================================================================
-Manganime.create = (manganime) => {
-  console.log("created manganime");
-  return db.one(`
-      INSERT INTO shows
+//========================================================================================================================================
+Manganime.create = (series) => {
+  return db.one(
+    `
+      INSERT INTO series
       (title, url, episodes_watched, user_id)
       VALUES ($1, $2, $3, $4) RETURNING *
     `,
-    [manganime.title, manganime.url, manganime.episodes_watched, manganime.user_id]
+    [series.title, series.url, series.episodes_watched, series.user_id]
   );
 };
-//==================================================================================================================================
-Manganime.update = (manganime, id) => {
-  return db.oneOrNone(`
-    UPDATE shows SET
-    episodes_watched = $1
-    WHERE id = $2
+//========================================================================================================================================
+Manganime.update = (series, id) => {
+  console.log("update working");
+  return db.oneOrNone(
+  `
+    UPDATE series SET
+    title = $1,
+    url = $2,
+    episodes_watched = $3,
+    user_id = $4
+    WHERE id = $5
     RETURNING *
   `,
-  [manganime.episodes_watched, id]
+  [series.title, series.url, series.episodes_watched, series.user_id, id]
     );
 };
-//==================================================================================================================================
+//========================================================================================================================================
 Manganime.delete = id => {
-  return db.none(`
-      DELETE FROM shows
+  console.log("model delete running");
+  return db.none(
+    `
+      DELETE FROM series
       WHERE id = $1
-    `,[id]);
+    `,
+    [id]
+  );
 };
-//==================================================================================================================================
+//========================================================================================================================================
 module.exports = Manganime;

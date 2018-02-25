@@ -1,4 +1,4 @@
-const db = require('../db/config');
+const db = require("../db/config");
 
 const User = {};
 
@@ -17,9 +17,5 @@ User.create = user => {
     RETURNING *
   `, [user.username, user.email, user.password_digest]);
 };
-
-
-
-
 
 module.exports = User;
