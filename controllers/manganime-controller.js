@@ -50,36 +50,36 @@ manganimeController.create = (req, res) => {
    });
 };
 //========================================================================================================================================
-// manganimeController.edit = (req,res) => {
-//  Manganime.findById(req.params.id)
-//  .then(manganimes => {
-//    res.json({
-//      data: manganimes
-//    })
-//  })
-//  .catch(err => {
-//    console.log("This is manganimeController.edit not working ===> ", err)
-//    res.status(400).json(err)
-//  })
-// };
+manganimeController.edit = (req,res) => {
+ Manganime.findById(req.params.id)
+ .then(manganime => {
+   res.json({
+     data: manganime
+   })
+ })
+ .catch(err => {
+   console.log("This is manganimeController.edit not working ===> ", err)
+   res.status(400).json(err)
+ })
+};
 //========================================================================================================================================
-// manganimeController.update = (req, res) => {
-//   Manganime.update({
-//     title: req.body.title,
-//     url: req.body.url,
-//     episodes_watched: req.body.episodes_watched,
-//     user_id: req.user.id
-//   }, req.params.id)
-//   .then( manganimes => {
-//     res.json({
-//       data: manganimes
-//     })
-//   })
-//   .catch(err => {
-//     console.log("This is manganimeController.update not working ===> ", err)
-//     res.status(400).json(err);
-//   });
-// };
+manganimeController.update = (req, res) => {
+  Manganime.update({
+    title: req.body.title,
+    url: req.body.url,
+    episodes_watched: req.body.episodes_watched,
+    user_id: req.user.id
+  }, req.params.id)
+  .then( manganime => {
+    res.json({
+      data: manganime
+    })
+  })
+  .catch(err => {
+    console.log("This is manganimeController.update not working ===> ", err)
+    res.status(400).json(err);
+  });
+};
 //========================================================================================================================================
 manganimeController.delete = (req, res) => {
   Manganime.delete(req.params.id)
