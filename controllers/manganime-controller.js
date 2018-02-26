@@ -28,15 +28,15 @@ manganimeController.show = (req, res) => {
   });
 };
 //========================================================================================================================================
-// manganimeController.new = (req, res) => {
-//  res.render("manganimes/new")
-// };
-//========================================================================================================================================
 manganimeController.create = (req, res) => {
  Manganime.create({
      title: req.body.title,
+     series_type: req.body.series_type,
      url: req.body.url,
      episodes_watched: req.body.episodes_watched,
+     chapters_read: req.body.chapters_read,
+     status: req.body.status,
+     rating: req.body.rating,
      user_id: req.user.id
    })
    .then(manganime => {
@@ -66,8 +66,12 @@ manganimeController.edit = (req,res) => {
 manganimeController.update = (req, res) => {
   Manganime.update({
     title: req.body.title,
+    series_type: req.body.series_type,
     url: req.body.url,
     episodes_watched: req.body.episodes_watched,
+    chapters_read: req.body.chapters_read,
+    status: req.body.status,
+    rating: req.body.rating,
     user_id: req.user.id
   }, req.params.id)
   .then( manganime => {

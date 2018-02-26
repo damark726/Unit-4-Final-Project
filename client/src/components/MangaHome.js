@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {Link} from "react-router-dom";
 
-class MangaHome extends Component {
+export default class MangaHome extends Component {
   constructor() {
     super();
     this.state = {};
@@ -36,5 +36,3 @@ class MangaHome extends Component {
     )
   }
 }
-
-export default MangaHome;

@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 // import {Link} from "react-router-dom";
 
-class Searchbar extends Component {
+export default class Searchbar extends Component {
   render() {
     return (
       <div className="Searchbar">
@@ -10,5 +10,3 @@ class Searchbar extends Component {
     )
   }
 }
-
-export default Searchbar;

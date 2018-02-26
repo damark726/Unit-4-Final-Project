@@ -3,7 +3,7 @@ import axios from "axios";
 import {Redirect} from "react-router-dom";
 
 
-class Register extends Component {
+export default class Register extends Component {
   constructor() {
     super();
     this.state = {
@@ -77,6 +77,3 @@ class Register extends Component {
       )
   }
 }
-
-
-export default Register;
