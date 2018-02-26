@@ -1,14 +1,14 @@
 import React, {Component} from "react";
 import {Link} from "react-router-dom";
-import Searchbar from './Searchbar';
 //=====================================================================================================================================
 export default class Header extends Component {
   render() {
     return (
       <div className="Header">
         <div>mangAnime</div>
-        <Searchbar />
-        <Link to='/'>Home</Link>
+        <Link to="/search">Search</Link>
+        <br />
+        <Link to="/">Home</Link>
         <br />
         <Link to="/anime">See Anime Only</Link>
         <br />

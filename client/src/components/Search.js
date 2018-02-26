@@ -1,0 +1,57 @@
+import React, {Component} from 'react';
+import SearchResults from './SearchResults';
+import axios from 'axios';
+//=====================================================================================================================================
+export default class Search extends Component {
+  constructor() {
+    super();
+    this.state = {};
+    this.handleSearchChange = this.handleSearchChange.bind(this);
+    this.handleSelectChange = this.handleSelectChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+//=====================================================================================================================================
+  handleSubmit(event) {
+    event.preventDefault();
+    axios.get(`https://kitsu.io/api/edge/${this.state.seriesType}?filter%5Btext%5D=${this.state.title}&page%5Blimit%5D=20`)
+    .then(data => {
+      this.setState({
+        results: data.data
+      })
+    })
+    .catch(err => console.log(err))
+    event.target.reset()
+  }
+//=====================================================================================================================================
+  handleSearchChange(event) {
+    const name = event.target.name;
+    const value = event.target.value;
+    this.setState({
+      [name]: value
+    });
+  }
+//=====================================================================================================================================
+  handleSelectChange(event) {
+    this.setState({
+      seriesType: event.target.value
+    });
+  }
+//=====================================================================================================================================
+  render() {
+    return(
+      <div className="Search">
+        <form action="/results" onSubmit={this.handleSubmit}>
+          <select value={this.state.value} onChange={this.handleSelectChange}>
+            <option value="">--Choose a type--</option>
+            <option value="anime">Anime</option>
+            <option value="manga">Manga</option>
+          </select>
+          <input id="text" type="text" name="title" placeholder="Search here" onChange={this.handleSearchChange} required />
+          <input id="submit" type="submit" value="Search" />
+        </form>
+        {this.state.results ? <SearchResults results={this.state.results} searchQuery={this.state.title} seriesType={this.state.seriesType} /> : ""}
+      </div>
+    )
+  }
+}
+//=====================================================================================================================================
