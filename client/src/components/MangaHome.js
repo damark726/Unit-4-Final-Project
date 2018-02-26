@@ -1,12 +1,12 @@
 import React, {Component} from "react";
 import {Link} from "react-router-dom";
-
+//=====================================================================================================================================
 export default class MangaHome extends Component {
   constructor() {
     super();
     this.state = {};
   }
-
+//=====================================================================================================================================
   componentDidMount() {
     fetch("https://kitsu.io/api/edge/manga?sort=popularityRank&page%5Blimit%5D=20")
     .then(data => data.json())
@@ -27,7 +27,7 @@ export default class MangaHome extends Component {
       });
     });
   }
-
+//=====================================================================================================================================
   render() {
     return (
       <div className="MangaHome">
@@ -36,3 +36,4 @@ export default class MangaHome extends Component {
     )
   }
 }
+//=====================================================================================================================================

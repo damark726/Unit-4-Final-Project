@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {Link} from "react-router-dom";
 import axios from "axios";
-//========================================================================================================================================
+//=====================================================================================================================================
 export default class SingleAnime extends Component {
   constructor() {
     super();
@@ -9,7 +9,7 @@ export default class SingleAnime extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
-//========================================================================================================================================
+//=====================================================================================================================================
   componentDidMount() {
     fetch(`https://kitsu.io/api/edge${this.props.match.url}`)
     .then(data => data.json())
@@ -22,9 +22,8 @@ export default class SingleAnime extends Component {
       console.log(err)
     })
   }
-//========================================================================================================================================
+//=====================================================================================================================================
   renderTitles() {
-    console.log(this.state.singleAnime);
     if (this.state.singleAnime.attributes.titles.en) {
       return <div className="title">{this.state.singleAnime.attributes.titles.en}</div>
     } else if (this.state.singleAnime.attributes.titles.en_jp) {
@@ -33,9 +32,8 @@ export default class SingleAnime extends Component {
       return <div className="title">{this.state.singleAnime.attributes.titles.ja_jp}</div>
     }
   }
-//========================================================================================================================================
+//=====================================================================================================================================
   correctTitleForFaveoritesAdd() {
-    console.log(this.state.singleAnime);
     if (this.state.singleAnime.attributes.titles.en) {
       return this.state.singleAnime.attributes.titles.en
     } else if (this.state.singleAnime.attributes.titles.en_jp) {
@@ -44,7 +42,7 @@ export default class SingleAnime extends Component {
       return this.state.singleAnime.attributes.titles.ja_jp
     }
   }
-//========================================================================================================================================
+//=====================================================================================================================================
   handleSubmit(event) {
     event.preventDefault();
     axios({
@@ -66,16 +64,15 @@ export default class SingleAnime extends Component {
     })
     .catch(err => console.log(err))
   }
-//========================================================================================================================================
+//=====================================================================================================================================
   handleChange(event){
     const name = event.target.name;
     const value = event.target.value;
     this.setState({
       [name]: value
     })
-    console.log(this.state);
   }
-//========================================================================================================================================
+//=====================================================================================================================================
   render() {
     return(
       <div className="SingleAnime">
@@ -93,4 +90,4 @@ export default class SingleAnime extends Component {
     )
   }
 }
-//========================================================================================================================================
+//=====================================================================================================================================

@@ -1,12 +1,12 @@
 import React, {Component} from "react";
 import {Link} from "react-router-dom";
-
-class AnimeHome extends Component {
+//=====================================================================================================================================
+export default class AnimeHome extends Component {
   constructor() {
     super();
     this.state = {};
   }
-
+//=====================================================================================================================================
   componentDidMount() {
     fetch("https://kitsu.io/api/edge/anime?sort=popularityRank&page%5Blimit%5D=20")
     .then(data => data.json())
@@ -27,7 +27,7 @@ class AnimeHome extends Component {
       });
     });
   }
-
+//=====================================================================================================================================
   render() {
     return (
       <div className="AnimeHome">
@@ -36,5 +36,4 @@ class AnimeHome extends Component {
     )
   }
 }
-
-export default AnimeHome;
+//=====================================================================================================================================

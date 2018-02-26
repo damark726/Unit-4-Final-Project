@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 // import {Link} from "react-router-dom";
-
+//=====================================================================================================================================
 export default class Searchbar extends Component {
   render() {
     return (
@@ -10,3 +10,4 @@ export default class Searchbar extends Component {
     )
   }
 }
+//=====================================================================================================================================

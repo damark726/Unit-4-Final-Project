@@ -25,27 +25,22 @@ Manganime.create = (series) => {
 };
 //========================================================================================================================================
 Manganime.update = (series, id) => {
-  console.log("update working");
   return db.oneOrNone(
   `
     UPDATE series SET
-    title = $1,
-    series_type = $2,
-    url = $3,
-    episodes_watched = $4,
-    chapters_read = $5,
-    status = $6,
-    rating = $7,
-    user_id = $8
-    WHERE id = $9
+    episodes_watched = $1,
+    chapters_read = $2,
+    status = $3,
+    rating = $4,
+    user_id = $5
+    WHERE id = $6
     RETURNING *
   `,
-  [series.title, series.series_type, series.url, series.episodes_watched, series.chapters_read, series.status, series.rating, series.user_id, id]
+  [series.episodes_watched, series.chapters_read, series.status, series.rating, series.user_id, id]
     );
 };
 //========================================================================================================================================
 Manganime.delete = id => {
-  console.log("model delete running");
   return db.none(
     `
       DELETE FROM series

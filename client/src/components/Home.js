@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import AnimeHome from "./AnimeHome";
 import MangaHome from "./MangaHome";
-
+//=====================================================================================================================================
 export default class Home extends Component {
   render() {
     return (
@@ -12,3 +12,4 @@ export default class Home extends Component {
     )
   }
 }
+//=====================================================================================================================================

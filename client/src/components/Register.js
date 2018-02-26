@@ -1,8 +1,7 @@
 import React, {Component} from "react";
 import axios from "axios";
 import {Redirect} from "react-router-dom";
-
-
+//=====================================================================================================================================
 export default class Register extends Component {
   constructor() {
     super();
@@ -16,7 +15,7 @@ export default class Register extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
-
+//=====================================================================================================================================
   handleChange(event) {
     let name = event.target.name;
     let value = event.target.value;
@@ -24,7 +23,7 @@ export default class Register extends Component {
       [name]: value
     })
   }
-
+//=====================================================================================================================================
   handleSubmit(event) {
     event.preventDefault();
     axios({
@@ -38,7 +37,6 @@ export default class Register extends Component {
       }
     })
     .then(person => {
-      console.log("got this back", person.data);
       this.setState({
         fireRedirect: true
       })
@@ -47,9 +45,8 @@ export default class Register extends Component {
       console.log(err)
     })
   }
-
+//=====================================================================================================================================
   render() {
-    console.log(this.state)
     return (
       <div className="Register">
         <div id="join">Welcome! Join mangAnime Here</div>
@@ -77,3 +74,4 @@ export default class Register extends Component {
       )
   }
 }
+//=====================================================================================================================================
