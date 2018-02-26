@@ -40,7 +40,7 @@ export default class Search extends Component {
   render() {
     return(
       <div className="Search">
-        <form action="/results" onSubmit={this.handleSubmit}>
+        <form action="/resulsts" onSubmit={this.handleSubmit}>
           <select value={this.state.value} onChange={this.handleSelectChange}>
             <option value="">--Choose a type--</option>
             <option value="anime">Anime</option>
@@ -49,7 +49,8 @@ export default class Search extends Component {
           <input id="text" type="text" name="title" placeholder="Search here" onChange={this.handleSearchChange} required />
           <input id="submit" type="submit" value="Search" />
         </form>
-        {this.state.results ? <SearchResults results={this.state.results} searchQuery={this.state.title} seriesType={this.state.seriesType} /> : ""}
+        {this.state.results ? <SearchResults results={this.state.results} title={this.state.title} seriesType={this.state.seriesType} /> : ""}
+        {/* {this.state.results ? <div>Hello</div> : ""} */}
       </div>
     )
   }
