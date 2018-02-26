@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {Link} from "react-router-dom";
 import Searchbar from './Searchbar';
-
+//=====================================================================================================================================
 export default class Header extends Component {
   render() {
     return (
@@ -24,3 +24,4 @@ export default class Header extends Component {
     )
   }
 }
+//=====================================================================================================================================

@@ -9,10 +9,13 @@ import MangaHome from "./components/MangaHome";
 import SingleAnime from "./components/SingleAnime";
 import SingleManga from "./components/SingleManga";
 import FavoritesList from "./components/FavoritesList";
-import FavoritesEdit from "./components/FavoritesEdit";
+import SingleAnimeFavorites from "./components/SingleAnimeFavorites";
+import SingleMangaFavorites from "./components/SingleMangaFavorites";
+import AnimeFavoritesEdit from "./components/AnimeFavoritesEdit";
+import MangaFavoritesEdit from "./components/MangaFavoritesEdit";
 import Footer from "./components/Footer";
 import "./App.css";
-//========================================================================================================================================
+//=====================================================================================================================================
 export default class App extends Component {
   render() {
     return (
@@ -26,7 +29,10 @@ export default class App extends Component {
             <Route path="/manga/:id" component={SingleManga} />
             <Route path="/anime" component={AnimeHome} />
             <Route path="/manga" component={MangaHome} />
-            <Route path='/edit/:id' component={FavoritesEdit}/>
+            <Route path="/favorites/anime/:dbid/:apiid/edit" component={AnimeFavoritesEdit}/>
+            <Route path="/favorites/manga/:dbid/:apiid/edit" component={MangaFavoritesEdit}/>
+            <Route path="/favorites/anime/:dbid/:apiid" component={SingleAnimeFavorites} />
+            <Route path="/favorites/manga/:dbid/:apiid" component={SingleMangaFavorites} />
             <Route path="/favorites" component={FavoritesList} />
             <Route path="/" component={Home} />
           </Switch>

@@ -23,7 +23,6 @@ manganimeController.show = (req, res) => {
   })
   .catch(err => {
     console.log("This is manganimeController.show not working ===> ", err)
-    console.log(req.params)
     res.status(400).json(err);
   });
 };
@@ -65,9 +64,6 @@ manganimeController.edit = (req,res) => {
 //========================================================================================================================================
 manganimeController.update = (req, res) => {
   Manganime.update({
-    title: req.body.title,
-    series_type: req.body.series_type,
-    url: req.body.url,
     episodes_watched: req.body.episodes_watched,
     chapters_read: req.body.chapters_read,
     status: req.body.status,

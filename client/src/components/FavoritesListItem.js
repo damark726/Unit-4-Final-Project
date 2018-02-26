@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 import axios from "axios";
-//========================================================================================================================================
+//=====================================================================================================================================
 export default class FavoritesListItem extends React.Component {
   constructor(props){
     super(props);
@@ -9,19 +9,17 @@ export default class FavoritesListItem extends React.Component {
       dbData: this.props.data
     };
   }
-//========================================================================================================================================
+//=====================================================================================================================================
   componentDidMount() {
     axios.get(this.state.dbData.url)
     .then(data => {
-      console.log(data.data.data);
       this.setState({
         apiData: data.data.data
       })
     })
   }
-//========================================================================================================================================
+//=====================================================================================================================================
   renderInfo() {
-    console.log(this.state);
     return(
       <div>
         <div>{this.state.dbData.title}</div>
@@ -29,11 +27,11 @@ export default class FavoritesListItem extends React.Component {
         <img src={this.state.apiData.attributes.posterImage.tiny} alt="" />
         <div>{this.state.dbData.status}</div>
         <div>{this.state.dbData.rating}</div>
-        <Link to={`/${this.state.apiData.type}/${this.state.apiData.id}`}>See More</Link><br />
+        <Link to={`/favorites/${this.state.apiData.type}/${this.state.dbData.id}/${this.state.apiData.id}`}>See More</Link><br />
       </div>
     )
   }
-//========================================================================================================================================
+//=====================================================================================================================================
   render() {
     return (
       <div className="FavoritesListItem">
@@ -42,4 +40,4 @@ export default class FavoritesListItem extends React.Component {
     )
   }
 }
-//========================================================================================================================================
+//=====================================================================================================================================

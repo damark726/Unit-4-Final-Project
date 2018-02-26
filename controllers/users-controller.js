@@ -11,7 +11,6 @@ usersController.create = (req, res) => {
     email: req.body.email,
     password_digest: hash,
   }).then(user => {
-    console.log("this is catching")
     req.login(user, (err) => {
       if(err) return next(err);
       res.redirect("/");
