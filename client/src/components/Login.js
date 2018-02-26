@@ -1,8 +1,7 @@
 import React, {Component} from "react";
 import axios from "axios";
-import {Redirect} from "react-router-dom";
 //========================================================================================================================================
-class Login extends Component {
+export default class Login extends Component {
   constructor() {
     super();
     this.state = {
@@ -29,7 +28,6 @@ class Login extends Component {
       password: this.state.password
     })
     .then( data => {
-      console.log(data);
       this.setState({
         loggedIn: true
       })
@@ -51,11 +49,10 @@ class Login extends Component {
   render() {
     return (
       <div className="Login">
-        {this.state.loggedIn ? <div id="log-in">You are Logged In</div> : <div id="log-in">Please Log In</div> }
-        {this.state.loggedIn ? "" : this.renderForm() }
+        {this.state.loggedIn ? <div id="log-in">Logged in successfully</div> : <div id="log-in">Please Log In</div> }
+        {!this.state.loggedIn ? this.renderForm() : "" }
       </div>
     )
   }
 }
 //========================================================================================================================================
-export default Login;

@@ -17,10 +17,10 @@ Manganime.create = (series) => {
   return db.one(
     `
       INSERT INTO series
-      (title, url, episodes_watched, user_id)
-      VALUES ($1, $2, $3, $4) RETURNING *
+      (title, series_type, url, episodes_watched, chapters_read, status, rating, user_id)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *
     `,
-    [series.title, series.url, series.episodes_watched, series.user_id]
+    [series.title, series.series_type, series.url, series.episodes_watched, series.chapters_read, series.status, series.rating, series.user_id]
   );
 };
 //========================================================================================================================================
@@ -30,13 +30,17 @@ Manganime.update = (series, id) => {
   `
     UPDATE series SET
     title = $1,
-    url = $2,
-    episodes_watched = $3,
-    user_id = $4
-    WHERE id = $5
+    series_type = $2,
+    url = $3,
+    episodes_watched = $4,
+    chapters_read = $5,
+    status = $6,
+    rating = $7,
+    user_id = $8
+    WHERE id = $9
     RETURNING *
   `,
-  [series.title, series.url, series.episodes_watched, series.user_id, id]
+  [series.title, series.series_type, series.url, series.episodes_watched, series.chapters_read, series.status, series.rating, series.user_id, id]
     );
 };
 //========================================================================================================================================
