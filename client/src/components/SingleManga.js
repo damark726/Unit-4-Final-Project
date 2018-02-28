@@ -81,9 +81,9 @@ export default class SingleManga extends Component {
         {this.state.singleManga ? this.renderTitles() : ""}
 
         <form onSubmit={this.handleSubmit}>
-          <input type="number" placeholder="Chapters Read" name="chapters_read" onChange={this.handleChange} />
-          <input type="text" placeholder="Status" name="status" onChange={this.handleChange} />
-          <input type="number" placeholder="Rating (1-10)" name="rating" onChange={this.handleChange} />
+          <input type="number" placeholder="Chapters Read" name="chapters_read" min="0" onChange={this.handleChange} required />
+          <input type="text" placeholder="Status" name="status" onChange={this.handleChange} required />
+          <input type="number" placeholder="Rating (1-10)" name="rating" min="1" max="10" onChange={this.handleChange} required />
           <input type="submit" value="Add to Favorites"/>
         </form>
       </div>

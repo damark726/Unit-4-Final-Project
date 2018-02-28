@@ -5,21 +5,16 @@ export default class Header extends Component {
   render() {
     return (
       <div className="Header">
-        <div>mangAnime</div>
-        <Link to="/search">Search</Link>
-        <br />
-        <Link to="/">Home</Link>
-        <br />
-        <Link to="/anime">See Anime Only</Link>
-        <br />
-        <Link to="/manga">See Manga Only</Link>
-        <br />
-        <Link to='/favorites'>Favorites</Link>
-        <br />
-        <Link to='/login'>Login</Link>
-        <br />
-        <Link to='/register'>Register</Link>
-        <br /><br />
+        <div id="logo"></div>
+        {/* <div id="eye"></div> */}
+        <div></div>
+        <div className="header-links"><Link to="/">Home</Link></div>
+        {/* <div className="header-links"><Link to="/anime">Anime</Link></div> */}
+        {/* <div className="header-links"><Link to="/man ga">Manga</Link></div> */}
+        <div className="header-links"><Link to='/favorites'>Favorites</Link></div>
+        <div className="header-links"><Link to="/search">Search</Link></div>
+        <div className="header-links"><Link to='/login'>Login</Link></div>
+        <div className="header-links"><Link to='/register'>Register</Link></div>
       </div>
     )
   }

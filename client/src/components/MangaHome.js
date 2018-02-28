@@ -8,7 +8,7 @@ export default class MangaHome extends Component {
   }
 //=====================================================================================================================================
   componentDidMount() {
-    fetch("https://kitsu.io/api/edge/manga?sort=popularityRank&page%5Blimit%5D=20")
+    fetch("https://kitsu.io/api/edge/manga?sort=popularityRank")
     .then(data => data.json())
     .then(data => {
       let divId = 1
@@ -18,7 +18,8 @@ export default class MangaHome extends Component {
             key={manga.id}
             className="MostPopularMangas"
             id={`manga${divId++}`}>
-              <Link to={`/manga/${manga.id}`}>{manga.attributes.titles.en ? manga.attributes.titles.en : manga.attributes.titles.en_jp}</Link>
+              <img alt="" src={manga.attributes.posterImage.tiny}/>
+              <div className="manga-link-div"><Link to={`/manga/${manga.id}`}>{manga.attributes.titles.en ? manga.attributes.titles.en : manga.attributes.titles.en_jp}</Link></div>
           </div>
         )
       });
@@ -31,6 +32,7 @@ export default class MangaHome extends Component {
   render() {
     return (
       <div className="MangaHome">
+        <div id="most-popular-mangas-title">Most Popular Manga</div>
         {this.state.mostPopularMangas ? this.state.mostPopularMangas : ""}
       </div>
     )
