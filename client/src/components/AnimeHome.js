@@ -8,7 +8,7 @@ export default class AnimeHome extends Component {
   }
 //=====================================================================================================================================
   componentDidMount() {
-    fetch("https://kitsu.io/api/edge/anime?sort=popularityRank&page%5Blimit%5D=20")
+    fetch("https://kitsu.io/api/edge/anime?sort=popularityRank")
     .then(data => data.json())
     .then(data => {
       let divId = 1
@@ -18,7 +18,8 @@ export default class AnimeHome extends Component {
             key={anime.id}
             className="MostPopularAnimes"
             id={`anime${divId++}`}>
-              <Link to={`/anime/${anime.id}`}>{anime.attributes.titles.en ? anime.attributes.titles.en : anime.attributes.titles.en_jp}</Link>
+              <img alt="" src={anime.attributes.posterImage.tiny}/>
+              <div className="anime-link-div"><Link to={`/anime/${anime.id}`}>{anime.attributes.titles.en ? anime.attributes.titles.en : anime.attributes.titles.en_jp}</Link></div>
           </div>
         )
       });
@@ -31,6 +32,7 @@ export default class AnimeHome extends Component {
   render() {
     return (
       <div className="AnimeHome">
+        <div id="most-popular-animes-title">Most Popular Anime</div>
         {this.state.mostPopularAnimes ? this.state.mostPopularAnimes : ""}
       </div>
     )

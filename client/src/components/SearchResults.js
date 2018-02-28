@@ -9,7 +9,8 @@ export default class SearchResults extends Component {
       results: this.props.results,
       title: this.props.title,
       seriesType: this.props.seriesType,
-      offset: 0
+      offset: 0,
+      page: 1
     }
   }
 //=====================================================================================================================================
@@ -82,29 +83,33 @@ export default class SearchResults extends Component {
   }
 //=====================================================================================================================================
   nextPage() {
-    let pageNumber = this.state.offset + 20;
-    fetch(`https://kitsu.io/api/edge/${this.state.seriesType}?filter%5Btext%5D=${this.state.title}&page%5Blimit%5D=20&page%5Boffset%5D=${pageNumber}`)
+    let offsetIncrement = this.state.offset + 20;
+    let pageNumber = this.state.page + 1;
+    fetch(`https://kitsu.io/api/edge/${this.state.seriesType}?filter%5Btext%5D=${this.state.title}&page%5Blimit%5D=20&page%5Boffset%5D=${offsetIncrement}`)
     .then(data => data.json())
     .then(data => {
       this.setState({
         nextPage: true,
         resultsNext: data.data,
         results: false,
-        offset: pageNumber
+        offset: offsetIncrement,
+        page: pageNumber
       })
     })
   }
 //=====================================================================================================================================
   prevPage() {
     if (this.state.offset > 1) {
-      let pageNumber = this.state.offset - 20;
-      fetch(`https://kitsu.io/api/edge/${this.state.seriesType}?filter%5Btext%5D=${this.state.title}&page%5Blimit%5D=20&page%5Boffset%5D=${pageNumber}`)
+      let offsetDecrement = this.state.offset - 20;
+      let pageNumber = this.state.page - 1;
+      fetch(`https://kitsu.io/api/edge/${this.state.seriesType}?filter%5Btext%5D=${this.state.title}&page%5Blimit%5D=20&page%5Boffset%5D=${offsetDecrement}`)
       .then(data => data.json())
       .then(data => {
         this.setState({
           nextPage: true,
           resultsNext: data.data,
-          offset: pageNumber
+          offset: offsetDecrement,
+          page: pageNumber
         })
       })
     }
@@ -113,11 +118,11 @@ export default class SearchResults extends Component {
   render() {
     return (
       <div className="SearchResults">
-        {this.state.results || this.state.resultsNext ? <div id="offset">Offset: {this.state.offset}</div> : ""}
-        {this.state.results ? this.renderResults() : ""}
-        {this.state.resultsNext ? this.renderResultsNext() : ""}
+        {this.state.results || this.state.resultsNext ? <div id="offset">Page: {this.state.page}</div> : ""}
         {this.state.results || this.state.resultsNext ? <input id="next" className="button" type="button" onClick={() => this.nextPage()} value="Next" /> : ""}
         {this.state.results || this.state.resultsNext ? <input id="previous" className="button" type="button" onClick={() => this.prevPage()} value="Previous" /> : ""}
+        {this.state.results ? this.renderResults() : ""}
+        {this.state.resultsNext ? this.renderResultsNext() : ""}
         {this.state.anime ? <SingleAnimeSearchResult anime={this.state.anime} /> : ""}
         {this.state.manga ? <SingleMangaSearchResult manga={this.state.manga} /> : ""}
       </div>);
