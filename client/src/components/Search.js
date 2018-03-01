@@ -37,20 +37,27 @@ export default class Search extends Component {
     });
   }
 //=====================================================================================================================================
+  renderForm() {
+    return(
+      <form action="/resulsts" onSubmit={this.handleSubmit}>
+        <select value={this.state.value} onChange={this.handleSelectChange}>
+          <option value="">Choose a series type</option>
+          <option value="anime">Anime</option>
+          <option value="manga">Manga</option>
+        </select>
+        <input id="text" type="text" name="title" placeholder="Search here" onChange={this.handleSearchChange} required />
+        <input id="submit" type="submit" value="Search" />
+      </form>
+    )
+  }
+//=====================================================================================================================================
   render() {
     return(
       <div className="Search">
-        <form action="/resulsts" onSubmit={this.handleSubmit}>
-          <select value={this.state.value} onChange={this.handleSelectChange}>
-            <option value="">--Choose a type--</option>
-            <option value="anime">Anime</option>
-            <option value="manga">Manga</option>
-          </select>
-          <input id="text" type="text" name="title" placeholder="Search here" onChange={this.handleSearchChange} required />
-          <input id="submit" type="submit" value="Search" />
-        </form>
-        {this.state.results ? <SearchResults results={this.state.results} title={this.state.title} seriesType={this.state.seriesType} /> : ""}
-        {/* {this.state.results ? <div>Hello</div> : ""} */}
+        {this.state.results ? <div id="reset" onClick={() => window.location.reload()}>Search Again</div> : ""}
+        {this.state.results
+          ? <SearchResults results={this.state.results} title={this.state.title} seriesType={this.state.seriesType} />
+          : this.renderForm()}
       </div>
     )
   }

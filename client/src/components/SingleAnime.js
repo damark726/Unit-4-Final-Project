@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import {Redirect} from "react-router-dom";
 import axios from "axios";
 //=====================================================================================================================================
 export default class SingleAnime extends Component {
@@ -41,6 +42,26 @@ export default class SingleAnime extends Component {
       return <span>{this.state.singleAnime.attributes.titles.zh_cn}</span>
     }
   }
+
+  renderTitlesForFavorties() {
+    if (this.state.singleAnime.attributes.titles.en_us) {
+      return this.state.singleAnime.attributes.titles.en_us
+    } else if (this.state.singleAnime.attributes.titles.en) {
+      return this.state.singleAnime.attributes.titles.en
+    } else if (this.state.singleAnime.attributes.titles.en_jp) {
+      return this.state.singleAnime.attributes.titles.en_jp
+    } else if (this.state.singleAnime.attributes.titles.en_kr) {
+      return this.state.singleAnime.attributes.titles.en_kr
+    } else if (this.state.singleAnime.attributes.titles.en_cn) {
+      return this.state.singleAnime.attributes.titles.en_cn
+    } else if (this.state.singleAnime.attributes.titles.ja_jp) {
+      return this.state.singleAnime.attributes.titles.ja_jp
+    } else if (this.state.singleAnime.attributes.titles.ko_kr) {
+      return this.state.singleAnime.attributes.titles.ko_kr
+    } else if (this.state.singleAnime.attributes.titles.zh_cn) {
+      return this.state.singleAnime.attributes.titles.zh_cn
+    }
+  }
 //=====================================================================================================================================
   renderForm() {
     return (
@@ -48,14 +69,14 @@ export default class SingleAnime extends Component {
         <input type="number" placeholder="Episodes Watched" name="episodes_watched" min="0" max={this.state.singleAnime.attributes.episodeCount} onChange={this.handleChange} required />
         <input type="text" placeholder="Status" name="status" onChange={this.handleChange} required />
         <input type="number" placeholder="Rating (1-10)" name="rating" min="1" max="10" onChange={this.handleChange} required />
-        <input type="submit" value="Add to Favorites" />
+        <input className="submit" type="submit" value="Add to Favorites" />
       </form>
     )
   }
 //=====================================================================================================================================
   renderInfo() {
     return(
-      <div id="info">
+      <div className="info">
         <div className="info-divs">Show Type: {this.state.singleAnime.attributes.showType}</div>
         <div className="info-divs">Status: {this.state.singleAnime.attributes.status}</div>
         <div className="info-divs">Total Episodes: {this.state.singleAnime.attributes.episodeCount}</div>
@@ -78,14 +99,15 @@ export default class SingleAnime extends Component {
   }
 
   componentDidUpdate() {
+    let divId = 1;
     fetch(this.state.singleAnime.relationships.genres.links.related)
     .then(data => data.json())
     .then(data => {
       const genres = data.data.map(genre => {
-        return(<div key={genre.id} id="more-info">
-          <div className="genres">{genre.attributes.name}</div>
-          <div className=""></div>
-        </div>)
+        return(
+          <div key={genre.id} className="genres" id={`genre${divId++}`}>
+            {genre.attributes.name}
+          </div>)
       })
       this.setState({
         genres: genres
@@ -99,11 +121,11 @@ export default class SingleAnime extends Component {
       method: 'POST',
       url: '/favorites',
       data: {
-        title: this.renderTitles(),
+        title: this.renderTitlesForFavorties(),
         series_type: this.state.singleAnime.type,
         url: this.state.singleAnime.links.self,
         episodes_watched: this.state.episodes_watched,
-        chapters_read: 0,
+        chapters_read: null,
         status: this.state.status,
         rating: this.state.rating
       }
@@ -126,15 +148,16 @@ export default class SingleAnime extends Component {
   render() {
     return(
       <div className="SingleAnime">
-        {this.state.singleAnime ? <img id="cover-image" alt="" src={this.state.singleAnime.attributes.coverImage.large} /> : ""}
-        {this.state.singleAnime ? <div id="title">{this.renderTitles()}</div> : ""}
-        {this.state.singleAnime ? <div id="poster-image"><img alt="" src={this.state.singleAnime.attributes.posterImage.small} /></div> : ""}
-        {/* {this.state.singleAnime ? this.renderForm(): ""} */}
-        <div id="synopsis-title">Synopsis</div>
-        {this.state.singleAnime ? <div id="synopsis">{this.state.singleAnime.attributes.synopsis}</div> : ""}
-        {this.state.singleAnime ? <div id="info-title">Additional Information</div> : ""}
+        {this.state.singleAnime ? <img className="cover-image" alt="" src={this.state.singleAnime.attributes.coverImage.large} /> : ""}
+        {this.state.singleAnime ? <div className="title">{this.renderTitles()}</div> : ""}
+        {this.state.singleAnime ? <div className="poster-image"><img alt="" src={this.state.singleAnime.attributes.posterImage.small} /></div> : ""}
+        {this.state.singleAnime ? this.renderForm(): ""}
+        {this.state.singleAnime ? <div className="synopsis"><span>Synopsis</span>{this.state.singleAnime.attributes.synopsis}</div> : ""}
+        {this.state.singleAnime ? <div className="info-title">Additional Information</div> : ""}
         {this.state.singleAnime ? this.renderInfo() : ""}
-        {this.state.genres ? this.state.genres : ""}
+        <div className="genres-title">Genres:</div>
+        <div className="genres-div">{this.state.genres ? this.state.genres : ""}</div>
+        {this.state.fireRedirect ? <Redirect push to="/favorites" /> : ""}
       </div>
     )
   }

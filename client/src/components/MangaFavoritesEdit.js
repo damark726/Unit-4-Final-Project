@@ -68,6 +68,7 @@ componentDidMount() {
         <div id="edit">Edit Entry</div>
           <form onSubmit={this.handleFormSubmit}>
             <input
+                id="status"
                 type="text"
                 placeholder="Status"
                 name="status"
@@ -76,6 +77,7 @@ componentDidMount() {
               />
             <br />
             <input
+                id="tracker"
                 type="number"
                 placeholder="Chapters Read"
                 name="chapters_read"
@@ -84,6 +86,7 @@ componentDidMount() {
               />
             <br />
             <input
+                id="rating"
                 type="number"
                 placeholder="Rating"
                 name="rating"
