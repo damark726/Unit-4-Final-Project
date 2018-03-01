@@ -20,11 +20,13 @@ export default class FavoritesListItem extends React.Component {
   }
 //=====================================================================================================================================
   renderInfo() {
+    let bg = {
+      backgroundImage: "url(" + this.state.apiData.attributes.posterImage.original + ")",
+    };
     return(
-      <div>
+      <div className="favorite-list-item-div" style={bg}>
         <div>{this.state.dbData.title}</div>
         {this.state.dbData.series_type === "manga" ? <div>Chapters Read: {this.state.dbData.chapters_read}</div> : <div>Episodes Watched: {this.state.dbData.episodes_watched}</div> }
-        <img src={this.state.apiData.attributes.posterImage.tiny} alt="" />
         <div>{this.state.dbData.status}</div>
         <div>{this.state.dbData.rating}</div>
         <Link to={`/favorites/${this.state.apiData.type}/${this.state.dbData.id}/${this.state.apiData.id}`}>See More</Link><br />

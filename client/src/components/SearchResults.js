@@ -15,16 +15,20 @@ export default class SearchResults extends Component {
   }
 //=====================================================================================================================================
   renderResults() {
-    let divId = 1
+    let divId = 1;
+    console.log(this.state);
     return this.state.results.data.map(manganime => {
+      let bg = {
+        backgroundImage: "url(" + manganime.attributes.posterImage.original + ")",
+      };
       return (
         <div
           key={manganime.id}
           className="SearchResultItem"
           id={`manganime${divId++}`}
+          style={bg}
           onClick={() => this.handleClick(manganime.type, manganime.id)}>
-          <img src={manganime.attributes.posterImage.tiny} alt="" />
-          <div>
+          <div className="title">
             {manganime.attributes.titles.en_us ? manganime.attributes.titles.en_us : ""}
             {!manganime.attributes.titles.en_us && manganime.attributes.titles.en ? manganime.attributes.titles.en : ""}
             {!manganime.attributes.titles.en && manganime.attributes.titles.en_jp ? manganime.attributes.titles.en_jp : ""}
@@ -39,16 +43,20 @@ export default class SearchResults extends Component {
   }
 //=====================================================================================================================================
   renderResultsNext() {
-    let divId = 1
+    let divId = 1;
+    console.log(this.state);
     return this.state.resultsNext.map(manganime => {
+      let bg = {
+        backgroundImage: "url(" + manganime.attributes.posterImage.original + ")",
+      };
       return (
         <div
           key={manganime.id}
           className="SearchResultItem"
           id={`manganime${divId++}`}
+          style={bg}
           onClick={() => this.handleClick(manganime.type, manganime.id)}>
-          <img src={manganime.attributes.posterImage.tiny} alt="" />
-          <div>
+          <div className="title">
             {manganime.attributes.titles.en_us ? manganime.attributes.titles.en_us : ""}
             {!manganime.attributes.titles.en_us && manganime.attributes.titles.en ? manganime.attributes.titles.en : ""}
             {!manganime.attributes.titles.en && manganime.attributes.titles.en_jp ? manganime.attributes.titles.en_jp : ""}
@@ -118,9 +126,11 @@ export default class SearchResults extends Component {
   render() {
     return (
       <div className="SearchResults">
-        {this.state.results || this.state.resultsNext ? <div id="offset">Page: {this.state.page}</div> : ""}
+        <div></div>
         {this.state.results || this.state.resultsNext ? <input id="next" className="button" type="button" onClick={() => this.nextPage()} value="Next" /> : ""}
+        {this.state.results || this.state.resultsNext ? <div id="offset">Page: {this.state.page}</div> : ""}
         {this.state.results || this.state.resultsNext ? <input id="previous" className="button" type="button" onClick={() => this.prevPage()} value="Previous" /> : ""}
+        <div></div>
         {this.state.results ? this.renderResults() : ""}
         {this.state.resultsNext ? this.renderResultsNext() : ""}
         {this.state.anime ? <SingleAnimeSearchResult anime={this.state.anime} /> : ""}
