@@ -66,6 +66,8 @@ In my head, I originally had an idea for how I wanted to style my site and what 
 
 **ERROR**: I was able to register and login, however once I click on a different link, the user automatically logs out. This error was what took me 3 days to fiugre out an fix. The first picture below was my problem, the second picture is the solution. Apparetnly I spent 3 whole days fixing a problem that only took re-arranging one line to solve. The first line in the first picture needed to be below the other two, as shown in the second picture.
 
+**PROBLEM**:
 <img width="797" alt="screen shot 2018-03-01 at 1 09 27 pm" src="https://git.generalassemb.ly/storage/user/8797/files/5d472848-1d52-11e8-9173-66c0c67bcb63">
 
+**SOLUTION**:
 <img width="790" alt="screen shot 2018-03-01 at 1 09 11 pm" src="https://git.generalassemb.ly/storage/user/8797/files/4d6e4398-1d52-11e8-90b8-218795ae96bc">
