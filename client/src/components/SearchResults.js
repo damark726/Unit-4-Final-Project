@@ -127,9 +127,9 @@ export default class SearchResults extends Component {
     return (
       <div className="SearchResults">
         <div></div>
-        {this.state.results || this.state.resultsNext ? <input id="next" className="button" type="button" onClick={() => this.nextPage()} value="Next" /> : ""}
-        {this.state.results || this.state.resultsNext ? <div id="offset">Page: {this.state.page}</div> : ""}
         {this.state.results || this.state.resultsNext ? <input id="previous" className="button" type="button" onClick={() => this.prevPage()} value="Previous" /> : ""}
+        {this.state.results || this.state.resultsNext ? <div id="offset">Page: {this.state.page}</div> : ""}
+        {this.state.results || this.state.resultsNext ? <input id="next" className="button" type="button" onClick={() => this.nextPage()} value="Next" /> : ""}
         <div></div>
         {this.state.results ? this.renderResults() : ""}
         {this.state.resultsNext ? this.renderResultsNext() : ""}
