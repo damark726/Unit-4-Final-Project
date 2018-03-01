@@ -61,6 +61,7 @@ In my head, I originally had an idea for how I wanted to style my site and what 
 **RESOLUTION**: Syntax error. Had a comma before the "WHERE".
 
 **ERROR**: React not able to read null or undefined data.
+
 **RESOLUTION**: Constantly console logging "this" or "this.state" to see exactly what is happening at all points during my site.
 
 **ERROR**: I was able to register and login, however once I click on a different link, the user automatically logs out. This error was what took me 3 days to fiugre out an fix. The first picture below was my problem, the second picture is the solution. Apparetnly I spent 3 whole days fixing a problem that only took re-arranging one line to solve. The first line in the first picture needed to be below the other two, as shown in the second picture.
