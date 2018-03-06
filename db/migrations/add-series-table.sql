@@ -1,5 +1,3 @@
-\c manganime_db
-
 DROP TABLE IF EXISTS series;
 
 CREATE TABLE IF NOT EXISTS series (
