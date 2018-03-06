@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 3001;
 app.use(morgan("dev"))
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
-app.use(express.static("build"));
+app.use(express.static("client/public"));
 app.use(cookieParser());
 app.use(session({secret: process.env.SESSION_KEY, resave: false, saveUninitialized: true}));
 app.use(passport.initialize());
