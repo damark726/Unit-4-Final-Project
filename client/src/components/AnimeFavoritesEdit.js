@@ -47,8 +47,7 @@ componentDidMount() {
 //=====================================================================================================================================
   handleFormSubmit(event) {
     event.preventDefault();
-    axios
-      .put(`/favorites/${this.props.match.params.dbid}`, {
+    axios.put(`/favorites/${this.props.match.params.dbid}`, {
         episodes_watched: this.state.episodes_watched,
         status: this.state.status,
         rating: this.state.rating

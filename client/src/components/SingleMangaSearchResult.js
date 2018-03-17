@@ -154,7 +154,7 @@ export default class SingleMangaSearchResult extends Component {
   //     <div className="cover-image" style={bg}></div>
   //   )
   // }
-  //
+
   // renderPosterImage() {
   //   let bg = {
   //     backgroundImage: "url(" + this.state.singleManga.attributes.posterImage.original + ")",

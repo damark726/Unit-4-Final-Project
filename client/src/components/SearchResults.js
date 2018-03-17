@@ -19,7 +19,7 @@ export default class SearchResults extends Component {
     console.log(this.state);
     return this.state.results.data.map(manganime => {
       let bg = {
-        backgroundImage: "url(" + manganime.attributes.posterImage.original + ")",
+        backgroundImage: `url(${manganime.attributes.posterImage.original})`,
       };
       return (
         <div
