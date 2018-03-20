@@ -1,3 +1,4 @@
+/* CSS for landscape orientation */
 html, body {
   margin: 0;
   padding: 0;
@@ -5,7 +6,7 @@ html, body {
   height: 100vh;
   display: grid;
   grid-template: 100% / 100%;
-  font-size: 2vw;
+  font-size: 2vh;
   background: url("./images/op.png");
   background-color: #fcfcfc;
   background-size: cover;
@@ -82,26 +83,22 @@ html, body {
   font-size: 1em;
 }
 /*=============================================================================================================================*/
-.AnimeHome {
-  grid-area: 1 / 1 / span 1 / span 1;
-  grid-template: 100px repeat(5, 250px) 10% / 10% repeat(2, 1fr) 5%;
-  border-right: 2px solid #7b4a7e;
-}
-
-.MangaHome {
-  grid-area: 1 / 2 / span 1 / span 1;
-  grid-template: 100px repeat(5, 250px) 10% / 5% repeat(2, 1fr) 10%;
-  border-left: 2px solid #7b4a7e;
-}
-
 .AnimeHome, .MangaHome {
   display: grid;
   font-size: 1em;
   overflow: scroll;
 }
 
-#most-popular-animes-title, #most-popular-mangas-title {
-  color: var(--black);
+.AnimeHome {
+  grid-area: 1 / 1 / span 1 / span 1;
+  grid-template: 10vh repeat(5, 40vh) 10vh / 7.5vw repeat(2, 1fr) 5vw;
+  border-right: 2px solid #7b4a7e;
+}
+
+.MangaHome {
+  grid-area: 1 / 2 / span 1 / span 1;
+  grid-template: 10vh repeat(5, 40vh) 10vh / 5vw repeat(2, 1fr) 7.5vw;
+  border-left: 2px solid #7b4a7e;
 }
 
 #most-popular-animes-title, #most-popular-mangas-title {
@@ -109,51 +106,46 @@ html, body {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 2em;
+  font-size: 3em;
   font-family: "Ubuntu", sans-serif;
+  color: var(--black);
 }
 
+.MostPopularAnimes {border: 4px solid var(--blue); border-radius: 20px 0 20px 0; box-shadow: -3px 3px 10px var(--black);}
+.MostPopularMangas {border: 4px solid var(--red); border-radius: 0 20px 0 20px; box-shadow: 3px 3px 10px var(--black);}
 .MostPopularAnimes, .MostPopularMangas {
-  display: grid;
-  grid-template: 1fr 40px 10px / 67.5px 1fr 67px;
-  font-size: 1em;
-}
-
-.MostPopularAnimes > img {border: 4px solid var(--blue); border-top-left-radius: 20px; border-bottom-right-radius: 20px;}
-.MostPopularMangas > img {border: 4px solid var(--red); border-top-right-radius: 20px; border-bottom-left-radius: 20px;}
-.MostPopularAnimes > img, .MostPopularMangas > img {
-  margin: 0 auto;
-  grid-area: 1 / 1 / span 3 / span 3;
-  height: 8em;
-}
-
-.anime-link-div {background-color: var(--blue); border-bottom-right-radius: 20px;}
-.manga-link-div {background-color: var(--red); border-bottom-left-radius: 20px;}
-.anime-link-div, .manga-link-div {
-  grid-area: 2 / 2 / span 1 / span 1;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 0.6em;
-  cursor: pointer;
-  transition: all 0.2s;
+  font-size: 1em;
+  margin: 0.75vw;
+  background-size: cover;
+  background-repeat: no-repeat;
+  transition: all 0.3s;
+}
+.MostPopularAnimes:hover, .MostPopularMangas:hover {box-shadow: none;}
+.MostPopularAnimes:hover a, .MostPopularMangas:hover a {
+  text-decoration: underline;
 }
 
-.anime-link-div:hover {background-color: var(--red);}
-.manga-link-div:hover {background-color: var(--blue);}
-
-.anime-link-div:hover > a, .manga-link-div:hover > a {
-  font-size: 0.9em;
-}
-
-.anime-link-div > a, .manga-link-div > a {
+.MostPopularAnimes > a, .MostPopularMangas > a {
+  display: flex;
+  align-items: flex-end;
   text-align: center;
-  font-size: 0.8em;
+  width: 100%;
+  height: 100%;
+  font-size: 1.5em;
   text-decoration: none;
-  font-family: "Ubuntu", sans-serif;
   color: var(--white);
-  transition: all 0.2s;
 }
+
+.MostPopularAnimes > a > span {background-color: var(--blue);}
+.MostPopularMangas > a > span {background-color: var(--red);}
+.MostPopularAnimes > a > span, .MostPopularMangas > a > span {
+  padding: 1vh 0;
+  width: 100%;
+}
+
 
 #anime1, #manga1 {grid-area: 2 / 2;}
 #anime2, #manga2 {grid-area: 2 / 3;}
