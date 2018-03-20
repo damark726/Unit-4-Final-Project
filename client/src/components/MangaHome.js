@@ -13,13 +13,16 @@ export default class MangaHome extends Component {
     .then(data => {
       let divId = 1
       const mangas = data.data.map((manga, index) => {
+        let bg = {
+          backgroundImage: `url(${manga.attributes.posterImage.large})`,
+        };
         return (
           <div
             key={manga.id}
             className="MostPopularMangas"
-            id={`manga${divId++}`}>
-              <img alt="" src={manga.attributes.posterImage.tiny}/>
-              <div className="manga-link-div"><Link to={`/manga/${manga.id}`}>{manga.attributes.titles.en ? manga.attributes.titles.en : manga.attributes.titles.en_jp}</Link></div>
+            id={`manga${divId++}`}
+            style={bg}>
+              <Link to={`/manga/${manga.id}`}><span>{manga.attributes.titles.en ? manga.attributes.titles.en : manga.attributes.titles.en_jp}</span></Link>
           </div>
         )
       });

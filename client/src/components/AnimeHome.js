@@ -13,13 +13,16 @@ export default class AnimeHome extends Component {
     .then(data => {
       let divId = 1
       const animes = data.data.map((anime, index) => {
+        let bg = {
+          backgroundImage: `url(${anime.attributes.posterImage.large})`,
+        };
         return (
           <div
             key={anime.id}
             className="MostPopularAnimes"
-            id={`anime${divId++}`}>
-              <img alt="" src={anime.attributes.posterImage.tiny}/>
-              <div className="anime-link-div"><Link to={`/anime/${anime.id}`}>{anime.attributes.titles.en ? anime.attributes.titles.en : anime.attributes.titles.en_jp}</Link></div>
+            id={`anime${divId++}`}
+            style={bg}>
+              <Link to={`/anime/${anime.id}`}><span>{anime.attributes.titles.en ? anime.attributes.titles.en : anime.attributes.titles.en_jp}</span></Link>
           </div>
         )
       });
