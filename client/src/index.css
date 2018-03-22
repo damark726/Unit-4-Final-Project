@@ -161,10 +161,10 @@ html, body {
 .SingleAnime,
 .SingleAnimeSearchResult,
 .SingleAnimeFavorites {
-  grid-template: 350px repeat(13, 100px) / repeat(20, 5%);
+  grid-template: 30vh repeat(13, 10vh) / repeat(20, 5%);
 }
 
-.SingleMangaFavorites > .links, .SingleAnimeFavorites > .links {
+.SingleAnimeFavorites > .links, .SingleMangaFavorites > .links {
   grid-area: 3 / 18/ span 1 / span 15;
   display: flex;
   justify-content: center;
@@ -176,7 +176,7 @@ html, body {
 .SingleManga,
 .SingleMangaSearchResult,
 .SingleMangaFavorites {
-  grid-template: 100vh repeat(13, 100px) / repeat(20, 5%);
+  grid-template: 30vh repeat(13, 10vh) / repeat(20, 5%);
 }
 
 .SingleAnime,
