@@ -23,6 +23,24 @@ export default class SingleAnime extends Component {
     })
   }
 //=====================================================================================================================================
+  renderCoverImage() {
+    let bg = {
+      backgroundImage: `url(${this.state.singleAnime.attributes.coverImage.large})`,
+    };
+    return(
+      <div id="cover-image" style={bg}></div>
+    )
+  }
+
+  renderPosterImage() {
+    let bg = {
+      backgroundImage: `url(${this.state.singleAnime.attributes.posterImage.small})`,
+    };
+    return(
+      <div id="poster-image" style={bg}></div>
+    )
+  }
+//=====================================================================================================================================
   renderTitles() {
     if (this.state.singleAnime.attributes.titles.en_us) {
       return <span>{this.state.singleAnime.attributes.titles.en_us}</span>
@@ -148,9 +166,9 @@ export default class SingleAnime extends Component {
   render() {
     return(
       <div className="SingleAnime">
-        {this.state.singleAnime ? <img className="cover-image" alt="" src={this.state.singleAnime.attributes.coverImage.large} /> : ""}
+        {this.state.singleAnime ? this.renderCoverImage() : ""}
         {this.state.singleAnime ? <div className="title">{this.renderTitles()}</div> : ""}
-        {this.state.singleAnime ? <div className="poster-image"><img alt="" src={this.state.singleAnime.attributes.posterImage.small} /></div> : ""}
+        {this.state.singleAnime ? this.renderPosterImage() : ""}
         {this.state.singleAnime ? this.renderForm(): ""}
         {this.state.singleAnime ? <div className="synopsis"><span>Synopsis</span>{this.state.singleAnime.attributes.synopsis}</div> : ""}
         {this.state.singleAnime ? <div className="info-title">Additional Information</div> : ""}
