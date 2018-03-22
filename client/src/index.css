@@ -19,6 +19,7 @@ html, body {
   --white: #ffffff;
   --black: #000000;
   --gray: #777777;
+  --gray2: #333444;
   --bg-black: rgba(0,0,0,0.8);
   --bg-white: rgba(255,255,255,0.8);
 
@@ -43,7 +44,7 @@ html, body {
   display: grid;
   grid-template: 1fr / 40% repeat(6, 1fr);
   font-size: 1em;
-  background-color: #333444;
+  background-color: var(--gray2);
   border-bottom: 4px solid #7b4a7e;
 }
 
@@ -123,10 +124,6 @@ html, body {
   background-repeat: no-repeat;
   transition: all 0.3s;
 }
-.MostPopularAnimes:hover, .MostPopularMangas:hover {box-shadow: none;}
-.MostPopularAnimes:hover a, .MostPopularMangas:hover a {
-  text-decoration: underline;
-}
 
 .MostPopularAnimes > a, .MostPopularMangas > a {
   display: flex;
@@ -144,6 +141,12 @@ html, body {
 .MostPopularAnimes > a > span, .MostPopularMangas > a > span {
   padding: 1vh 0;
   width: 100%;
+  transition: all 0.3s;
+}
+
+.MostPopularAnimes:hover, .MostPopularMangas:hover {box-shadow: none; border: 4px solid var(--gray2)}
+.MostPopularAnimes:hover a span, .MostPopularMangas:hover a span {
+  background-color: var(--gray2);
 }
 
 
