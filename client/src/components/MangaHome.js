@@ -14,7 +14,7 @@ export default class MangaHome extends Component {
       let divId = 1
       const mangas = data.data.map((manga, index) => {
         let bg = {
-          backgroundImage: `url(${manga.attributes.posterImage.large})`,
+          backgroundImage: `url(${manga.attributes.posterImage.original})`,
         };
         return (
           <div

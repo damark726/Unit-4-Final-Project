@@ -14,7 +14,7 @@ export default class AnimeHome extends Component {
       let divId = 1
       const animes = data.data.map((anime, index) => {
         let bg = {
-          backgroundImage: `url(${anime.attributes.posterImage.large})`,
+          backgroundImage: `url(${anime.attributes.posterImage.original})`,
         };
         return (
           <div
