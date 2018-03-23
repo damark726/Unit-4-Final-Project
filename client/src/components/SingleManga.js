@@ -22,6 +22,24 @@ export default class SingleManga extends Component {
     })
   }
 //=====================================================================================================================================
+  renderCoverImage() {
+    let bg = {
+      backgroundImage: `url(${this.state.singleManga.attributes.coverImage.original})`,
+    };
+    return(
+      <div id="cover-image" style={bg}></div>
+    )
+  }
+
+  renderPosterImage() {
+    let bg = {
+      backgroundImage: `url(${this.state.singleManga.attributes.posterImage.original})`,
+    };
+    return(
+      <div id="poster-image" style={bg}></div>
+    )
+  }
+//=====================================================================================================================================
   renderTitles() {
     if (this.state.singleManga.attributes.titles.en_us) {
       return <span>{this.state.singleManga.attributes.titles.en_us}</span>
@@ -147,9 +165,9 @@ export default class SingleManga extends Component {
   render() {
     return(
       <div className="SingleManga">
-        {this.state.singleManga ? <img className="cover-image" alt="" src={this.state.singleManga.attributes.coverImage.original} /> : ""}
+        {this.state.singleManga ? this.renderCoverImage() : ""}
         {this.state.singleManga ? <div className="title">{this.renderTitles()}</div> : ""}
-        {this.state.singleManga ? <div className="poster-image"><img alt="" src={this.state.singleManga.attributes.posterImage.small} /></div> : ""}
+        {this.state.singleManga ? this.renderPosterImage() : ""}
         {this.state.singleManga ? this.renderForm(): ""}
         {this.state.singleManga ? <div className="synopsis"><span>Synopsis</span>{this.state.singleManga.attributes.synopsis}</div> : ""}
         {this.state.singleManga ? <div className="info-title">Additional Information</div> : ""}

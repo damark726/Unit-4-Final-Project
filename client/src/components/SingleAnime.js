@@ -1,5 +1,4 @@
 import React, {Component} from "react";
-import {Redirect} from "react-router-dom";
 import axios from "axios";
 //=====================================================================================================================================
 export default class SingleAnime extends Component {
@@ -34,7 +33,7 @@ export default class SingleAnime extends Component {
 
   renderPosterImage() {
     let bg = {
-      backgroundImage: `url(${this.state.singleAnime.attributes.posterImage.small})`,
+      backgroundImage: `url(${this.state.singleAnime.attributes.posterImage.original})`,
     };
     return(
       <div id="poster-image" style={bg}></div>
@@ -175,7 +174,6 @@ export default class SingleAnime extends Component {
         {this.state.singleAnime ? this.renderInfo() : ""}
         <div className="genres-title">Genres:</div>
         <div className="genres-div">{this.state.genres ? this.state.genres : ""}</div>
-        {this.state.fireRedirect ? <Redirect push to="/favorites" /> : ""}
       </div>
     )
   }
