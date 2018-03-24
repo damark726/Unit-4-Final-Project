@@ -169,7 +169,7 @@ export default class SingleManga extends Component {
         {this.state.singleManga ? <div className="title">{this.renderTitles()}</div> : ""}
         {this.state.singleManga ? this.renderPosterImage() : ""}
         {this.state.singleManga ? this.renderForm(): ""}
-        {this.state.singleManga ? <div className="synopsis"><span>Synopsis</span>{this.state.singleManga.attributes.synopsis}</div> : ""}
+        {this.state.singleManga ? <div className="synopsis"><div id="synopsis-title"><span>Synopsis</span></div><div>{this.state.singleManga.attributes.synopsis}</div></div> : ""}
         {this.state.singleManga ? <div className="info-title">Additional Information</div> : ""}
         {this.state.singleManga ? this.renderInfo() : ""}
         <div className="genres-title">Genres:</div>

@@ -169,7 +169,7 @@ export default class SingleAnime extends Component {
         {this.state.singleAnime ? <div className="title">{this.renderTitles()}</div> : ""}
         {this.state.singleAnime ? this.renderPosterImage() : ""}
         {this.state.singleAnime ? this.renderForm(): ""}
-        {this.state.singleAnime ? <div className="synopsis"><span>Synopsis</span>{this.state.singleAnime.attributes.synopsis}</div> : ""}
+        {this.state.singleAnime ? <div className="synopsis"><div id="synopsis-title">Synopsis</div><div>{this.state.singleAnime.attributes.synopsis}</div></div> : ""}
         {this.state.singleAnime ? <div className="info-title">Additional Information</div> : ""}
         {this.state.singleAnime ? this.renderInfo() : ""}
         <div className="genres-title">Genres:</div>
