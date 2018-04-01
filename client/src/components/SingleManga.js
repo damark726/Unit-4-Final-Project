@@ -10,6 +10,7 @@ export default class SingleManga extends Component {
   }
 //=====================================================================================================================================
   componentDidMount() {
+    console.log(`https://kitsu.io/api/edge${this.props.match.url}`);
     fetch(`https://kitsu.io/api/edge${this.props.match.url}`)
     .then(data => data.json())
     .then(data => {
@@ -21,6 +22,19 @@ export default class SingleManga extends Component {
       console.log(err)
     })
   }
+//=====================================================================================================================================
+  // renderCharacters() {
+  //   fetch(this.state.singleManga.relationships.mangaCharacters.links.self)
+  //   .then(res => res.json())
+  //   .then(res => {
+  //     const characters = res.data.map((element, index) => {
+  //       return element.id
+  //     })
+  //     this.setState({
+  //       characters: characters
+  //     })
+  //   })
+  // }
 //=====================================================================================================================================
   renderCoverImage() {
     let bg = {

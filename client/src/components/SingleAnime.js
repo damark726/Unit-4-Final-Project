@@ -13,18 +13,49 @@ export default class SingleAnime extends Component {
     fetch(`https://kitsu.io/api/edge${this.props.match.url}`)
     .then(data => data.json())
     .then(data => {
-      this.setState({
-        singleAnime: data.data
+      this.setState({singleAnime: data.data}, () => {
+        fetch(this.state.singleAnime.relationships.genres.links.related)
+        .then(data => data.json())
+        .then(data => {
+          let divId = 1;
+          let genres = data.data.map(genre => {
+            return (<div key={genre.id} className="genres" id={`genre${divId++}`}>
+              {genre.attributes.name}
+            </div>)
+          })
+          this.setState({genres: genres})
+        })
+        fetch(this.state.singleAnime.relationships.animeCharacters.links.self)
+        .then(data => data.json())
+        .then(data => {
+          let charactersInfo = [];
+          data.data.forEach(element => {
+            fetch(`https://kitsu.io/api/edge/anime-characters/${element.id}/character`)
+            .then(data => data.json())
+            .then(data => charactersInfo.push(data.data.id))
+          })
+          this.setState({characters: charactersInfo})
+        })
+        setTimeout(() => {
+          console.log(this.state);
+        }, 3000);
       })
-    })
-    .catch(err => {
-      console.log(err)
     })
   }
 //=====================================================================================================================================
+  shouldComponentUpdate() {
+    if (this.state.characters && this.state.genres) {
+      return false
+    } else {
+      return true
+    }
+  }
+//=====================================================================================================================================
+  // renderCharactersId() {}
+//=====================================================================================================================================
   renderCoverImage() {
     let bg = {
-      backgroundImage: `url(${this.state.singleAnime.attributes.coverImage.large})`,
+      backgroundImage: `url(${this.state.singleAnime.attributes.coverImage.large})`
     };
     return(
       <div id="cover-image" style={bg}></div>
@@ -33,7 +64,7 @@ export default class SingleAnime extends Component {
 
   renderPosterImage() {
     let bg = {
-      backgroundImage: `url(${this.state.singleAnime.attributes.posterImage.original})`,
+      backgroundImage: `url(${this.state.singleAnime.attributes.posterImage.original})`
     };
     return(
       <div id="poster-image" style={bg}></div>
@@ -107,31 +138,6 @@ export default class SingleAnime extends Component {
     )
   }
 //=====================================================================================================================================
-  shouldComponentUpdate() {
-    if (this.state.genres) {
-      return false
-    } else {
-      return true
-    }
-  }
-
-  componentDidUpdate() {
-    let divId = 1;
-    fetch(this.state.singleAnime.relationships.genres.links.related)
-    .then(data => data.json())
-    .then(data => {
-      const genres = data.data.map(genre => {
-        return(
-          <div key={genre.id} className="genres" id={`genre${divId++}`}>
-            {genre.attributes.name}
-          </div>)
-      })
-      this.setState({
-        genres: genres
-      })
-    })
-  }
-//=====================================================================================================================================
   handleSubmit(event) {
     event.preventDefault();
     axios({
@@ -165,6 +171,9 @@ export default class SingleAnime extends Component {
   render() {
     return(
       <div className="SingleAnime">
+
+        {/* <div className="1">{this.state.charactersPageId && this.state.genres ? this.renderCharactersId() : ""}</div> */}
+
         {this.state.singleAnime ? this.renderCoverImage() : ""}
         {this.state.singleAnime ? <div className="title">{this.renderTitles()}</div> : ""}
         {this.state.singleAnime ? this.renderPosterImage() : ""}
@@ -174,6 +183,7 @@ export default class SingleAnime extends Component {
         {this.state.singleAnime ? this.renderInfo() : ""}
         <div className="genres-title">Genres:</div>
         <div className="genres-div">{this.state.genres ? this.state.genres : ""}</div>
+
       </div>
     )
   }
