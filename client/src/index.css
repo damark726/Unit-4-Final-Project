@@ -286,7 +286,7 @@ html, body {
   display: grid;
   grid-template: 1fr 9fr / 1fr;
   text-align: justify;
-  font-size: 1em;
+  font-size: 1.05em;
   line-height: 1.5;
   color: var(--black);
   background-color: var(--bg-white);
@@ -297,7 +297,7 @@ html, body {
 
 .SingleAnime #synopsis-title {
   margin: 0 auto;
-  font-size: 1.3em;
+  font-size: 1.2em;
   font-weight: bold;
   /* text-decoration: underline; */
 }
