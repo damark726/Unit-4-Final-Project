@@ -465,6 +465,11 @@ html, body {
   flex-direction: column;
   justify-content: flex-start;
 }
+
+.Characters {
+  grid-area: 10 / 6 / span 5 / span 15;
+  overflow: scroll;
+}
 /*=============================================================================================================================*/
 .Search {
   grid-area: 2 / 1 / span 1 / span 1;
