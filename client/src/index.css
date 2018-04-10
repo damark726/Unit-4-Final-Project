@@ -3,7 +3,7 @@ html, body {
   margin: 0;
   padding: 0;
   width: 100vw;
-  height: 100vmin;
+  height: 100vh;
   display: grid;
   grid-template: 100% / 100%;
   font-size: 2vmin;
@@ -92,13 +92,13 @@ html, body {
 
 .AnimeHome {
   grid-area: 1 / 1 / span 1 / span 1;
-  grid-template: 10vmin repeat(5, 40vmin) 10vmin / 7.5vmax repeat(2, 1fr) 5vmax;
+  grid-template: 10vh repeat(5, 40vh) 10vh / 7.5vw repeat(2, 1fr) 5vw;
   border-right: 2px solid #7b4a7e;
 }
 
 .MangaHome {
   grid-area: 1 / 2 / span 1 / span 1;
-  grid-template: 10vh repeat(5, 40vh) 10vmin / 5vw repeat(2, 1fr) 7.5vw;
+  grid-template: 10vh repeat(5, 40vh) 10vh / 5vw repeat(2, 1fr) 7.5vw;
   border-left: 2px solid #7b4a7e;
 }
 
@@ -167,7 +167,7 @@ html, body {
 .SingleManga,
 .SingleMangaSearchResult,
 .SingleMangaFavorites {
-  grid-template: 45vmin repeat(13, 10vmin) / repeat(20, 5%);
+  grid-template: 45vh repeat(13, 10vh) / repeat(20, 5%);
 }
 
 .SingleAnimeFavorites > .links, .SingleMangaFavorites > .links {
