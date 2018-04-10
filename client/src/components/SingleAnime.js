@@ -28,7 +28,6 @@ export default class SingleAnime extends Component {
             fetch(this.state.singleAnime.relationships.animeCharacters.links.self)
             .then(data => data.json())
             .then(data => {
-              // console.log(data.data);
               let charactersId = [];
               data.data.forEach(element => {
                 fetch(`https://kitsu.io/api/edge/anime-characters/${element.id}/character`)
@@ -47,25 +46,13 @@ export default class SingleAnime extends Component {
     })
   }
 //=====================================================================================================================================
-  // shouldComponentUpdate() {
-  //   if (this.state.charactersInfo) {
-  //     return false
-  //   } else {
-  //     return true
-  //   }
-  // }
-//=====================================================================================================================================
-  // renderCharacters() {
-  //   const charactersInfo = this.state.charactersId.map(element => {
-  //     return fetch(`https://kitsu.io/api/edge/characters/${element}`)
-  //     .then(data => data.json())
-  //     .then(data => {
-  //       return data.data
-  //     })
-  //   })
-  //   this.setState({charactersInfo: charactersInfo})
-  //   // console.log(charactersInfo);
-  // }
+  shouldComponentUpdate() {
+    if (this.state.charactersId) {
+      return false
+    } else {
+      return true
+    }
+  }
 //=====================================================================================================================================
   renderCoverImage() {
     let bg = {
@@ -183,6 +170,7 @@ export default class SingleAnime extends Component {
   }
 //=====================================================================================================================================
   render() {
+    console.log(this.state);
     return(
       <div className="SingleAnime">
 

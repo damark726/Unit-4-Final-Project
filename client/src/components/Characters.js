@@ -8,21 +8,33 @@ export default class Characters extends Component {
 
   componentDidMount() {
     let charactersInfo = []
-    let sortedCharactersId = this.props.charactersId.sort()
-    console.log(sortedCharactersId);
-    sortedCharactersId.forEach(element => {
+    this.props.charactersId.forEach(element => {
       fetch(`https://kitsu.io/api/edge/characters/${element}`)
       .then(data => data.json())
       .then(data => {
-        // charactersInfo.push(`${data.data.id} - ${data.data.attributes.canonicalName}`)
         charactersInfo.push(data.data)
-        if (charactersInfo.length === sortedCharactersId.length) {
-          this.setState({charactersInfo: charactersInfo}, () => {
-            let names = this.state.charactersInfo.map(name => {
-              return (<div key={name.id}>{name.attributes.canonicalName}</div>)
+        if (charactersInfo.length === this.props.charactersId.length) {
+          let sortedCharactersInfo = charactersInfo.sort((a, b) => a.id - b.id)
+          this.setState({charactersInfo: sortedCharactersInfo}, () => {
+            let renderCharactersInfo = this.state.charactersInfo.map(character => {
+              if (character.attributes.image) {
+                let bg = {backgroundImage: `url(${character.attributes.image.original})`}
+                return (
+                  <div key={character.id} style={bg}>
+                    {character.attributes.canonicalName}
+                  </div>
+                )
+              } else {
+                let bg = {backgroundImage: `url(http://res.cloudinary.com/damark726/image/upload/v1523327404/No_image_available_ed3rvn.svg)`, backgroundColor: `#bbbbbb`}
+                return (
+                  <div key={character.id} style={bg}>
+                    {character.attributes.canonicalName}
+                  </div>
+                )
+              }
             })
-            if (names.length === sortedCharactersId.length) {
-              this.setState({names: names})
+            if (renderCharactersInfo.length === this.props.charactersId.length) {
+              this.setState({renderCharactersInfo: renderCharactersInfo})
             }
           })
         }
@@ -42,7 +54,7 @@ render() {
     console.log(this.state);
     return (
       <div className="Characters">
-        {this.state.names ? this.state.names : ""}
+        {this.state.renderCharactersInfo ? this.state.renderCharactersInfo : "Loading Characters"}
       </div>
     )
   }
