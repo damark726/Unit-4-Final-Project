@@ -467,8 +467,20 @@ html, body {
 }
 
 .Characters {
-  grid-area: 10 / 6 / span 5 / span 15;
-  overflow: scroll;
+  grid-area: 10 / 6 / span 3 / span 15;
+  display: grid;
+  grid-template: 1fr / repeat(600, 19.3vh);
+  grid-column-gap: 2vh;
+  overflow-x: scroll;
+}
+
+.Characters > div {
+  /* position: relative; */
+  /* width: 100%; */
+  /* padding-top: 155.556%; */
+  background-size: 100% 100%;
+  /* border: 2px solid var(--blue); */
+  /* border-radius: 0 20px 20px 20px; */
 }
 /*=============================================================================================================================*/
 .Search {
