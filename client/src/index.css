@@ -475,12 +475,23 @@ html, body {
 }
 
 .Characters > div {
-  /* position: relative; */
-  /* width: 100%; */
-  /* padding-top: 155.556%; */
   background-size: 100% 100%;
-  /* border: 2px solid var(--blue); */
-  /* border-radius: 0 20px 20px 20px; */
+  display: flex;
+  align-items: flex-end;
+  text-align: center;
+}
+
+.Characters > div > span {
+  background: var(--gray2);
+  color: var(--white);
+  border-top: 1px solid var(--white);
+  width: 100%;
+  font-size: 1em;
+  padding: 0.1em 0;
+}
+
+.reviews-div {
+  overflow: scroll;
 }
 /*=============================================================================================================================*/
 .Search {

@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import axios from "axios";
 import Characters from "./Characters";
+import StreamingLinks from "./StreamingLinks";
 //=====================================================================================================================================
 export default class SingleAnime extends Component {
   constructor() {
@@ -25,18 +26,35 @@ export default class SingleAnime extends Component {
             </div>)
           })
           this.setState({genres: genres}, () => {
-            fetch(this.state.singleAnime.relationships.animeCharacters.links.self)
+            fetch(this.state.singleAnime.relationships.reviews.links.related)
             .then(data => data.json())
             .then(data => {
-              let charactersId = [];
-              data.data.forEach(element => {
-                fetch(`https://kitsu.io/api/edge/anime-characters/${element.id}/character`)
-                .then(nestedData => nestedData.json())
-                .then(nestedData => {
-                  charactersId.push(nestedData.data.id)
-                  if (charactersId.length === data.data.length) {
-                    this.setState({charactersId: charactersId})
-                  }
+              let reviews = data.data.map(review => {
+                return(<div key={review.id}>
+                  {review.attributes.content}
+                </div>)
+              })
+              this.setState({reviews: reviews, nextPageReviews: data.links.next}, () => {
+                fetch(this.state.singleAnime.relationships.streamingLinks.links.related)
+                .then(data => data.json())
+                .then(data => {
+                  this.setState({streamingLinks: data.data}, () => {
+                    fetch(this.state.singleAnime.relationships.animeCharacters.links.self)
+                    .then(data => data.json())
+                    .then(data => {
+                      let charactersId = [];
+                      data.data.forEach(element => {
+                        fetch(`https://kitsu.io/api/edge/anime-characters/${element.id}/character`)
+                        .then(nestedData => nestedData.json())
+                        .then(nestedData => {
+                          charactersId.push(nestedData.data.id)
+                          if (charactersId.length === data.data.length) {
+                            this.setState({charactersId: charactersId})
+                          }
+                        })
+                      })
+                    })
+                  })
                 })
               })
             })
@@ -45,6 +63,24 @@ export default class SingleAnime extends Component {
       })
     })
   }
+
+  // {
+  //   fetch(this.state.singleAnime.relationships.animeCharacters.links.self)
+  //   .then(data => data.json())
+  //   .then(data => {
+  //     let charactersId = [];
+  //     data.data.forEach(element => {
+  //       fetch(`https://kitsu.io/api/edge/anime-characters/${element.id}/character`)
+  //       .then(nestedData => nestedData.json())
+  //       .then(nestedData => {
+  //         charactersId.push(nestedData.data.id)
+  //         if (charactersId.length === data.data.length) {
+  //           this.setState({charactersId: charactersId})
+  //         }
+  //       })
+  //     })
+  //   })
+  // }
 //=====================================================================================================================================
   shouldComponentUpdate() {
     if (this.state.charactersId) {
@@ -170,11 +206,12 @@ export default class SingleAnime extends Component {
   }
 //=====================================================================================================================================
   render() {
-    console.log(this.state);
+    // console.log(this.state);
     return(
       <div className="SingleAnime">
 
         {this.state.charactersId ? <Characters charactersId={this.state.charactersId} /> : ""}
+        {this.state.streamingLinks ? <StreamingLinks streamingLinks={this.state.streamingLinks} /> : ""}
 
         {this.state.singleAnime ? this.renderCoverImage() : ""}
         {this.state.singleAnime ? <div className="title">{this.renderTitles()}</div> : ""}
@@ -185,6 +222,7 @@ export default class SingleAnime extends Component {
         {this.state.singleAnime ? this.renderInfo() : ""}
         <div className="genres-title">Genres:</div>
         <div className="genres-div">{this.state.genres ? this.state.genres : ""}</div>
+        <div className="reviews-div">{this.state.reviews ? this.state.reviews : ""}</div>
 
       </div>
     )
