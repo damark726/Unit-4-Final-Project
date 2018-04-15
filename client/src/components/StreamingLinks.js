@@ -5,7 +5,7 @@ export default class StreamingLinks extends Component {
     super()
     this.state = {}
   }
-
+//=====================================================================================================================================
   componentDidMount() {
     let streamingLinks = []
     this.props.streamingLinks.forEach(streamingLink => {
@@ -18,7 +18,7 @@ export default class StreamingLinks extends Component {
       .then(this.setState({streamingLinks: streamingLinks}))
     })
   }
-
+//=====================================================================================================================================
   renderStreamingLinks() {
     return this.state.streamingLinks.map((streamingLink, index) => {
       return (
@@ -28,13 +28,14 @@ export default class StreamingLinks extends Component {
       )
     })
   }
-
+//=====================================================================================================================================
   render() {
-    console.log(this.state);
+    // console.log(this.state);
     return (
       <div className="StreamingLinks">
-        {this.state.streamingLinks ? this.renderStreamingLinks() : ""}
+        {this.state.streamingLinks ? this.state.streamingLinks.length > 0 ? this.renderStreamingLinks() : "No Streaming links" : "No Streaming links"}
       </div>
     )
   }
 }
+//=====================================================================================================================================

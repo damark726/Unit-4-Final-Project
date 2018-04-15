@@ -1,5 +1,7 @@
 import React, {Component} from "react";
 import axios from "axios";
+import Characters from "./Characters";
+// import StreamingLinks from "./StreamingLinks";
 //=====================================================================================================================================
 export default class SingleManga extends Component {
   constructor() {
@@ -9,49 +11,162 @@ export default class SingleManga extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 //=====================================================================================================================================
-  componentDidMount() {
-    console.log(`https://kitsu.io/api/edge${this.props.match.url}`);
-    fetch(`https://kitsu.io/api/edge${this.props.match.url}`)
-    .then(data => data.json())
-    .then(data => {
-      this.setState({
-        singleManga: data.data
-      })
-    })
-    .catch(err => {
-      console.log(err)
-    })
-  }
-//=====================================================================================================================================
-  // renderCharacters() {
-  //   fetch(this.state.singleManga.relationships.mangaCharacters.links.self)
-  //   .then(res => res.json())
-  //   .then(res => {
-  //     const characters = res.data.map((element, index) => {
-  //       return element.id
-  //     })
-  //     this.setState({
-  //       characters: characters
+  // componentDidMount() {
+  //   console.log(`https://kitsu.io/api/edge${this.props.match.url}`);
+  //   fetch(`https://kitsu.io/api/edge${this.props.match.url}`)
+  //   .then(data => data.json())
+  //   .then(data => {
+  //     this.setState({singleManga: data.data}, () => {
+  //       fetch(this.state.singleManga.relationships.genres.links.related)
+  //       .then(data => data.json())
+  //       .then(data => {
+  //         let divId = 1;
+  //         let genres = data.data.map(genre => {
+  //           return (<div key={genre.id} className="genres" id={`genre${divId++}`}>
+  //             {genre.attributes.name}
+  //           </div>)
+  //         })
+  //         this.setState({genres: genres}, () => {
+  //           fetch(this.state.singleManga.relationships.reviews.links.related)
+  //           .then(data => data.json())
+  //           .then(data => {
+  //             let reviews = data.data.map(review => {
+  //               return(<div key={review.id}>
+  //                 {review.attributes.content}<br /><br />
+  //               </div>)
+  //             })
+  //             this.setState({reviews: reviews, nextPageReviews: data.links.next}
+  //             //   , () => {
+  //             //   fetch(this.state.singleManga.relationships.installments.links.related)
+  //             //   .then(data => data.json())
+  //             //   .then(data => {
+  //             //     this.setState({streamingLinks: data.data}
+  //             //     //   , () => {
+  //             //     //   fetch(this.state.singleManga.relationships.mangaCharacters.links.self)
+  //             //     //   .then(data => data.json())
+  //             //     //   .then(data => {
+  //             //     //     let charactersId = [];
+  //             //     //     data.data.forEach(element => {
+  //             //     //       fetch(`https://kitsu.io/api/edge/anime-characters/${element.id}/character`)
+  //             //     //       .then(nestedData => nestedData.json())
+  //             //     //       .then(nestedData => {
+  //             //     //         charactersId.push(nestedData.data.id)
+  //             //     //         if (charactersId.length === data.data.length) {
+  //             //     //           this.setState({charactersId: charactersId})
+  //             //     //         }
+  //             //     //       })
+  //             //     //     })
+  //             //     //   })
+  //             //     // }
+  //             //   )
+  //             //   })
+  //             // }
+  //           )
+  //           })
+  //         })
+  //       })
   //     })
   //   })
   // }
+
+  componentDidMount() {
+    fetch(`https://kitsu.io/api/edge${this.props.match.url}`)
+    .then(data => data.json())
+    .then(data => {
+      this.setState({singleManga: data.data}, () => {
+        fetch(this.state.singleManga.relationships.genres.links.related)
+        .then(data => data.json())
+        .then(data => {
+          let divId = 1;
+          let genres = data.data.map(genre => {
+            return (<div key={genre.id} className="genres" id={`genre${divId++}`}>
+              {genre.attributes.name}
+            </div>)
+          })
+          this.setState({genres: genres}, () => {
+            fetch(this.state.singleManga.relationships.reviews.links.related)
+            .then(data => data.json())
+            .then(data => {
+              let reviews = data.data.map(review => {
+                return(<div key={review.id}>
+                  {review.attributes.content}<br /><br />
+                </div>)
+              })
+              this.setState({reviews: reviews, nextPageReviews: data.links.next}, () => {
+                fetch(this.state.singleManga.relationships.installments.links.related)
+                .then(data => data.json())
+                .then(data => {
+                  console.log(data.data);
+                  this.setState({streamingLinks: data.data}, () => {
+                    fetch(this.state.singleManga.relationships.mangaCharacters.links.self)
+                    .then(data => data.json())
+                    .then(data => {
+                      let charactersId = [];
+                      data.data.forEach(element => {
+                        fetch(`https://kitsu.io/api/edge/anime-characters/${element.id}/character`)
+                        .then(nestedData => nestedData.json())
+                        .then(nestedData => {
+                          charactersId.push(nestedData.data.id)
+                          if (charactersId.length === data.data.length) {
+                            this.setState({charactersId: charactersId})
+                          }
+                        })
+                      })
+                    })
+                  })
+                })
+              })
+            })
+          })
+        })
+      })
+    })
+  }
+//=====================================================================================================================================
+  shouldComponentUpdate() {
+    if (this.state.streamingLinks) {
+      return false
+    } else {
+      return true
+    }
+  }
 //=====================================================================================================================================
   renderCoverImage() {
-    let bg = {
-      backgroundImage: `url(${this.state.singleManga.attributes.coverImage.original})`,
-    };
-    return(
-      <div id="cover-image" style={bg}></div>
-    )
+    if (this.state.singleManga.attributes.coverImage) {
+      let bg = {
+        backgroundImage: `url(${this.state.singleManga.attributes.coverImage.original})`
+      }
+      return (
+        <div id="cover-image" style={bg}></div>
+      )
+    } else {
+      let bg = {
+        backgroundImage: `url(http://res.cloudinary.com/damark726/image/upload/v1523327404/No_image_available_ed3rvn.svg)`,
+        backgroundColor: `#bbbbbb`
+      }
+      return (
+        <div id="cover-image" style={bg}></div>
+      )
+    }
   }
-
+//=====================================================================================================================================
   renderPosterImage() {
-    let bg = {
-      backgroundImage: `url(${this.state.singleManga.attributes.posterImage.original})`,
-    };
-    return(
-      <div id="poster-image" style={bg}></div>
-    )
+    if (this.state.singleManga.attributes.posterImage) {
+      let bg = {
+        backgroundImage: `url(${this.state.singleManga.attributes.posterImage.original})`
+      }
+      return (
+        <div id="poster-image" style={bg}></div>
+      )
+    } else {
+      let bg = {
+        backgroundImage: `url(http://res.cloudinary.com/damark726/image/upload/v1523327404/No_image_available_ed3rvn.svg)`,
+        backgroundColor: `#bbbbbb`
+      }
+      return (
+        <div id="poster-image" style={bg}></div>
+      )
+    }
   }
 //=====================================================================================================================================
   renderTitles() {
@@ -121,31 +236,6 @@ export default class SingleManga extends Component {
     )
   }
 //=====================================================================================================================================
-  shouldComponentUpdate() {
-    if (this.state.genres) {
-      return false
-    } else {
-      return true
-    }
-  }
-
-  componentDidUpdate() {
-    let divId = 1;
-    fetch(this.state.singleManga.relationships.genres.links.related)
-    .then(data => data.json())
-    .then(data => {
-      const genres = data.data.map(genre => {
-        return(
-          <div key={genre.id} className="genres" id={`genre${divId++}`}>
-            {genre.attributes.name}
-          </div>)
-      })
-      this.setState({
-        genres: genres
-      })
-    })
-  }
-//=====================================================================================================================================
   handleSubmit(event) {
     event.preventDefault();
     axios({
@@ -177,19 +267,30 @@ export default class SingleManga extends Component {
   }
 //=====================================================================================================================================
   render() {
+    // console.log(this.state);
     return(
       <div className="SingleManga">
         {this.state.singleManga ? this.renderCoverImage() : ""}
         {this.state.singleManga ? <div className="title">{this.renderTitles()}</div> : ""}
+
         {this.state.singleManga ? this.renderPosterImage() : ""}
+        {this.state.singleManga ? <div className="synopsis"><div id="synopsis-title">Synopsis</div><div>{this.state.singleManga.attributes.synopsis}</div></div> : ""}
         {this.state.singleManga ? this.renderForm(): ""}
-        {this.state.singleManga ? <div className="synopsis"><div id="synopsis-title"><span>Synopsis</span></div><div>{this.state.singleManga.attributes.synopsis}</div></div> : ""}
+
         {this.state.singleManga ? <div className="info-title">Additional Information</div> : ""}
         {this.state.singleManga ? this.renderInfo() : ""}
-        <div className="genres-title">Genres:</div>
+        {/* <div className="genres-title">Genres:</div> */}
+
         <div className="genres-div">{this.state.genres ? this.state.genres : ""}</div>
+        <div className="reviews-div">{this.state.reviews ? this.state.reviews : ""}</div>
+        {/* {this.state.streamingLinks ? <StreamingLinks streamingLinks={this.state.streamingLinks} /> : ""} */}
+        {this.state.charactersId ? <div className="characters-title"><span>Characters</span></div> : <div className="characters-title"><span>Characters List Unavailable</span></div>}
+        {this.state.charactersId ? <Characters charactersId={this.state.charactersId} /> : ""}
       </div>
     )
   }
 }
+//  fetch =>  this.state.singleManga.mediaRelationships.links.related
+//  .then =>  data.data.relationships.destination.links.self
+//  .then =>  data.data.type & data.data.id
 //=====================================================================================================================================
