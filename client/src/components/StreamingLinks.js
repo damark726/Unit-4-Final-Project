@@ -30,10 +30,9 @@ export default class StreamingLinks extends Component {
   }
 //=====================================================================================================================================
   render() {
-    // console.log(this.state);
     return (
       <div className="StreamingLinks">
-        {this.state.streamingLinks ? this.state.streamingLinks.length > 0 ? this.renderStreamingLinks() : "No Streaming links" : "No Streaming links"}
+        {this.state.streamingLinks ? this.state.streamingLinks.length > 0 ? this.renderStreamingLinks() : "" : <div className="nsla-div">No streaming links available</div>}
       </div>
     )
   }

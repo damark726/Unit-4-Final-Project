@@ -198,8 +198,8 @@ html, body {
   overflow: scroll;
 }
 
-.SingleAnime > #cover-image {border-bottom: 0.75vh solid var(--blue); background-size: auto 100%;}
-.SingleManga > #cover-image {border-bottom: 0.75vh solid var(--red); background-size: 100% auto;;}
+.SingleAnime > #cover-image {border-bottom: 0.375em solid var(--blue); background-size: auto 100%;}
+.SingleManga > #cover-image {border-bottom: 0.375em solid var(--red); background-size: 100% auto;;}
 .SingleAnime > #cover-image, .SingleManga > #cover-image {
   grid-area: 1 / 1 / span 1 / span 20;
   background-color: var(--black);
@@ -415,13 +415,14 @@ html, body {
 .SingleManga > .info-title,
 .SingleMangaFavorites > .info-title,
 .SingleMangaSearchResult > .info-title {
-  grid-area: 8 / 1 / span 1 / span 4;
+  grid-area: 8 / 1 / span 1 / span 3;
   color: var(--white);
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-  font-size: 1.5em;
+  font-size: 1.3em;
+  padding: 0 1em;
   text-shadow: 3px 3px 10px var(--gray2);
   font-weight: bold;
 }
@@ -432,7 +433,7 @@ html, body {
 .SingleManga > .info,
 .SingleMangaFavorites > .info,
 .SingleMangaSearchResult > .info {
-  grid-area: 9 / 1 / span 6 / span 4;
+  grid-area: 9 / 1 / span 6 / span 3;
   background-color: var(--white);
   display: grid;
   grid-template: repeat(9, 1fr) / 1fr;
@@ -450,6 +451,8 @@ html, body {
   align-items: center;
   text-align: center;
   font-weight: bold;
+  font-size: 0.85em;
+  padding: 0 1em;
 }
 
 .SingleAnime > .genres-title,
@@ -458,16 +461,17 @@ html, body {
 .SingleManga > .genres-title,
 .SingleMangaFavorites > .genres-title,
 .SingleMangaSearchResult > .genres-title {
-  grid-area: 16 / 1 / span 1 / span 4;
-  color: var(--white);
+  grid-area: 15 / 1 / span 1 / span 3;
+  color: var(--blue);
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-  background-color: var(--blue2);
-  font-size: 1.5em;
-  text-shadow: 3px 3px 10px var(--gray2);
-  font-weight: bold;
+  padding: 0 1em;
+  background-color: var(--white);
+  border-top: 0.1875em solid var(--blue2);
+  font-size: 1.3em;
+  font-family: custom-font;
 }
 
 .SingleAnime > .genres-div,
@@ -476,44 +480,64 @@ html, body {
 .SingleManga > .genres-div,
 .SingleMangaFavorites > .genres-div,
 .SingleMangaSearchResult > .genres-div {
-  grid-area: 17 / 1 / span 1 / span 4;
-  display: flex;
-  /* flex-direction: column; */
-  justify-content: space-around;
-  flex-wrap: wrap;
-  align-items: center;
-  /* text-align: center; */
-  padding: 0 1em;
+  grid-area: 16 / 1 / span 2 / span 3;
+  display: grid;
+  grid-template: repeat(4, 1fr) / repeat(2, 1fr);
+  font-size: 0.85em;
+  font-weight: bold;
   background-color: var(--white);
+  padding: 0 0.75em;
 }
-
-.SingleAnime > .streaming-links-title {
-  grid-area: 19 / 1 / span 1 / span 4;
-  color: var(--white);
+.genres {
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-  background-color: var(--blue2);
-  font-size: 1.5em;
-  text-shadow: 3px 3px 10px var(--gray2);
-  font-weight: bold;
+}
+
+.SingleAnime > .streaming-links-title {
+  grid-area: 18 / 1 / span 1 / span 3;
+  color: var(--blue);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 1em;
+  background-color: var(--white);
+  border-top: 0.1875em solid var(--blue2);
+  font-size: 1.3em;
+  font-family: custom-font;
 }
 
 .StreamingLinks {
-  grid-area: 20 / 1 / span 1 / span 4;
-  display: flex;
-  /* flex-direction: column; */
-  justify-content: space-around;
-  flex-wrap: wrap;
-  align-items: center;
-  /* text-align: center; */
-  padding: 0 1em;
+  grid-area: 19 / 1 / span 2 / span 3;
+  display: grid;
+  grid-template: repeat(4, 1fr) / repeat(2, 1fr);
+  text-align: center;
+  font-size: 0.85em;
+  font-weight: bold;
   background-color: var(--white);
+  padding: 0 0.75em;
+}
+.streaming-link-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.nsla-div {
+  grid-area: 1 / 1 / span 1 / -1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 0.85em;
+  padding: 0 1em;
 }
 
 .characters-title {
-  grid-area: 8 / 6 / span 1 / span 14;
+  grid-area: 8 / 5 / span 1 / span 15;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -533,7 +557,7 @@ html, body {
 }
 
 .Characters {
-  grid-area: 9 / 6 / span 3 / span 14;
+  grid-area: 9 / 5 / span 3 / span 15;
   display: grid;
   grid-template: 1fr / repeat(600, 19.3vh);
   grid-column-gap: 0.75em;
@@ -560,12 +584,38 @@ html, body {
   text-shadow: 3px 3px 10px var(--black);
 }
 
-.reviews-div {
-  grid-area: 14 / 6 / span 7 / span 14;
-  background-color: var(--white);
+.reviews-title {
+  grid-area: 13 / 5 / span 1 / span 15;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.5em;
+  color: var(--blue);
+  font-family: custom-font;
+  background-color: var(--white2);
+  /* border: 6px solid var(--gray2); */
+  /* border-bottom: none; */
+}
+
+.reviews-container {
+  grid-area: 14 / 5 / span 7 / span 15;
+  background-color: var(--white2);
   /* border-radius: 4em; */
   padding: 1em;
   overflow: scroll;
+}
+
+.review {
+  margin: 0 0 2em 0;
+  background-color: var(--white);
+  /* color: var(--white); */
+}
+
+.testinggg {
+  height: 80px;
+  width: 80px;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 }
 /*=============================================================================================================================*/
 .Search {
