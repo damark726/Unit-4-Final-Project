@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import axios from "axios";
 import Characters from "./Characters";
 import StreamingLinks from "./StreamingLinks";
+import Reviews from "./Reviews";
 //=====================================================================================================================================
 export default class SingleAnime extends Component {
   constructor() {
@@ -29,12 +30,7 @@ export default class SingleAnime extends Component {
             fetch(this.state.singleAnime.relationships.reviews.links.related)
             .then(data => data.json())
             .then(data => {
-              let reviews = data.data.map(review => {
-                return(<div key={review.id}>
-                  {review.attributes.content}<br /><br />
-                </div>)
-              })
-              this.setState({reviews: reviews, nextPageReviews: data.links.next}, () => {
+              this.setState({reviews: data}, () => {
                 fetch(this.state.singleAnime.relationships.streamingLinks.links.related)
                 .then(data => data.json())
                 .then(data => {
@@ -208,31 +204,24 @@ export default class SingleAnime extends Component {
   }
 //=====================================================================================================================================
   render() {
-    if (this.state.streamingLinks) {
-      console.log(this.state.streamingLinks.length);
-    }
     return(
       <div className="SingleAnime">
         {this.state.singleAnime ? this.renderCoverImage() : ""}
         {this.state.singleAnime ? <div className="title">{this.renderTitles()}</div> : ""}
-
         {this.state.singleAnime ? this.renderPosterImage() : ""}
         {this.state.singleAnime ? <div className="synopsis"><div id="synopsis-title">Synopsis</div><div>{this.state.singleAnime.attributes.synopsis}</div></div> : ""}
         {this.state.singleAnime ? this.renderForm(): ""}
-
-        {this.state.singleAnime ? <div className="info-title">Additional Information</div> : ""}
+        {this.state.singleAnime ? <div className="info-title">Anime Information</div> : ""}
         {this.state.singleAnime ? this.renderInfo() : ""}
-
         {this.state.genres ? <div className="genres-title">Genres</div> : ""}
         <div className="genres-div">{this.state.genres ? this.state.genres : ""}</div>
-
         {this.state.streamingLinks ? <div className="streaming-links-title">Streaming Links</div> : ""}
         {this.state.streamingLinks ? <StreamingLinks streamingLinks={this.state.streamingLinks} /> : ""}
-
         {this.state.charactersId ? <div className="characters-title"><span>Characters</span></div> : ""}
         {this.state.charactersId ? <Characters charactersId={this.state.charactersId} /> : ""}
-
-        <div className="reviews-div">{this.state.reviews ? this.state.reviews : ""}</div>
+        {this.state.reviews ? <div className="reviews-title"><span>User Reviews</span></div> : ""}
+        {/* <div className="reviews-container">{this.state.reviews ? this.state.reviews : ""}</div> */}
+        {this.state.reviews ? <Reviews reviews={this.state.reviews} /> : ""}
       </div>
     )
   }
