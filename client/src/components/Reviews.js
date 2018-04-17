@@ -97,8 +97,10 @@ export default class Reviews extends Component {
   render() {
     return(
       <div className="reviews-container">
-        <div className="prev-page" onClick={this.prevPage}>Prev Page</div>
-        <div className="next-page" onClick={this.nextPage}>Next Page</div>
+        <div className="button-container">
+          <div className="prev-page" onClick={this.prevPage}>Prev Page</div>
+          <div className="next-page" onClick={this.nextPage}>Next Page</div>
+        </div>
         {this.state.userInfo ? this.renderReviews() : ""}
       </div>
     )

@@ -593,24 +593,40 @@ html, body {
   color: var(--white);
   font-family: custom-font;
   background-color: var(--gray2);
-  /* border-bottom: 0.1em solid var(--white); */
 }
 
 .reviews-container {
   grid-area: 14 / 5 / span 7 / span 15;
-  /* background-color: var(--white2); */
+  background-color: var(--gray2);
   padding: 0.5em 1em;
-  color: var(--white);
   overflow: scroll;
+  display: grid;
+  grid-template: 3em 1fr / 1fr
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  color: var(--white);
+}
+
+.button-container > div {
+  transition: all 0.3s;
+  cursor: pointer;
+}
+.button-container > div:hover {
+  text-decoration: underline;
+  color: var(--red);
 }
 
 .review {
+  /* grid-area: 2 / 1 / span 1 / span 2; */
   margin: 0 0 2em 0;
-  background-color: var(--gray2);
+  background-color: var(--white);
   display: grid;
   grid-template: 5em 7.5em / 5em 1fr;
   border-radius: 0 3em 3em 3em;
-  /* box-shadow: 3px 3px 8px var(--gray2); */
 }
 
 .avatar {
@@ -624,6 +640,7 @@ html, body {
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  padding: 0.5em 1em 0 1em;
   font-size: 0.8em;
   text-align: center;
   word-break: break-word;
@@ -632,6 +649,8 @@ html, body {
 .user-review {
   grid-area: 1 / 2 / span 2 / span 1;
   padding: 1em 2em;
+  font-size: 0.9em;
+  border-left: 0.1em solid var(--gray2);
   overflow: scroll;
 }
 /*=============================================================================================================================*/
