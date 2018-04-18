@@ -1,6 +1,8 @@
 import React, {Component} from "react";
-// import {Link, Redirect} from "react-router-dom";
 import axios from "axios";
+import Characters from "./Characters";
+import StreamingLinks from "./StreamingLinks";
+import Reviews from "./Reviews";
 //=====================================================================================================================================
 export default class SingleAnimeSearchResult extends Component {
   constructor() {
@@ -14,39 +16,94 @@ export default class SingleAnimeSearchResult extends Component {
     fetch(`https://kitsu.io/api/edge/${this.props.anime.data.type}/${this.props.anime.data.id}`)
     .then(data => data.json())
     .then(data => {
-      this.setState({
-        singleAnime: data.data
+      this.setState({singleAnime: data.data}, () => {
+        fetch(this.state.singleAnime.relationships.genres.links.related)
+        .then(data => data.json())
+        .then(data => {
+          let divId = 1;
+          let genres = data.data.map(genre => {
+            return (<div key={genre.id} className="genres" id={`genre${divId++}`}>
+              {genre.attributes.name}
+            </div>)
+          })
+          this.setState({genres: genres}, () => {
+            fetch(this.state.singleAnime.relationships.reviews.links.related)
+            .then(data => data.json())
+            .then(data => {
+              this.setState({reviews: data}, () => {
+                fetch(this.state.singleAnime.relationships.streamingLinks.links.related)
+                .then(data => data.json())
+                .then(data => {
+                  this.setState({streamingLinks: data.data}, () => {
+                    fetch(this.state.singleAnime.relationships.animeCharacters.links.self)
+                    .then(data => data.json())
+                    .then(data => {
+                      let charactersId = [];
+                      data.data.forEach(element => {
+                        fetch(`https://kitsu.io/api/edge/anime-characters/${element.id}/character`)
+                        .then(nestedData => nestedData.json())
+                        .then(nestedData => {
+                          charactersId.push(nestedData.data.id)
+                          if (charactersId.length === data.data.length) {
+                            this.setState({charactersId: charactersId})
+                          }
+                        })
+                      })
+                    })
+                  })
+                })
+              })
+            })
+          })
+        })
       })
     })
-    .catch(err => {
-      console.log(err)
-    })
   }
-
+//=====================================================================================================================================
   shouldComponentUpdate() {
-    if (this.state.genres) {
+    if (this.state.charactersId) {
       return false
     } else {
       return true
     }
   }
-
-  componentDidUpdate() {
-    let divId = 1;
-    console.log(this.state.singleAnime);
-    fetch(this.state.singleAnime.relationships.genres.links.related)
-    .then(data => data.json())
-    .then(data => {
-      const genres = data.data.map(genre => {
-        return (
-          <div key={genre.id} className="genres" id={`genre${divId++}`}>
-            {genre.attributes.name}
-        </div>)
-      })
-      this.setState({
-        genres: genres
-      })
-    })
+//=====================================================================================================================================
+  renderCoverImage() {
+    if (this.state.singleAnime.attributes.coverImage) {
+      let bg = {
+        backgroundImage: `url(${this.state.singleAnime.attributes.coverImage.large})`
+      }
+      return (
+        <div id="cover-image" style={bg}></div>
+      )
+    } else {
+      let bg = {
+        backgroundImage: `url(http://res.cloudinary.com/damark726/image/upload/v1523327404/No_image_available_ed3rvn.svg)`,
+        backgroundColor: `#bbbbbb`
+      }
+      return (
+        <div id="cover-image" style={bg}></div>
+      )
+    }
+  }
+//=====================================================================================================================================
+  renderPosterImage() {
+    if (this.state.singleAnime.attributes.posterImage) {
+      let bg = {
+        backgroundImage: `url(${this.state.singleAnime.attributes.posterImage.original})`
+      }
+      return (
+        <div id="poster-image" style={bg}></div>
+      )
+    } else {
+      let bg = {
+        backgroundImage: `url(http://res.cloudinary.com/damark726/image/upload/v1523327404/No_image_available_ed3rvn.svg)`,
+        backgroundColor: `#bbbbbb`
+      }
+      return (
+        <div id="poster-image" style={bg}></div>
+      )
+    }
   }
 //=====================================================================================================================================
   renderTitles() {
@@ -134,7 +191,7 @@ export default class SingleAnimeSearchResult extends Component {
       </div>
     )
   }
-
+//=====================================================================================================================================
   renderForm() {
     return (
       <form onSubmit={this.handleSubmit}>
@@ -146,41 +203,26 @@ export default class SingleAnimeSearchResult extends Component {
     )
   }
 
-  //  When I refactor this in the future, use these commented out methods instead. It's dryer and renders better on the page
-  // renderCoverImage() {
-  //   let bg = {
-  //     backgroundImage: "url(" + this.state.singleAnime.attributes.coverImage.original + ")",
-  //   };
-  //   return(
-  //     <div className="cover-image" style={bg}></div>
-  //   )
-  // }
-  //
-  // renderPosterImage() {
-  //   let bg = {
-  //     backgroundImage: "url(" + this.state.singleAnime.attributes.posterImage.original + ")",
-  //   };
-  //   return(
-  //     <div className="poster-image" style={bg}></div>
-  //   )
-  // }
 //=====================================================================================================================================
   render() {
+    console.log(this.props);
     return(
-      <div className="SingleAnimeSearchResult">
-        {/* {this.state.singleAnime ? this.renderCoverImage() : ""} */}
-        {this.state.singleAnime ? <img className="cover-image" alt="" src={this.state.singleAnime.attributes.coverImage.large} /> : ""}
+      <div className="SingleAnime">
+        {this.state.singleAnime ? this.renderCoverImage() : ""}
         {this.state.singleAnime ? <div className="title">{this.renderTitles()}</div> : ""}
-        {/* {this.state.singleAnime ? this.renderPosterImage() : ""} */}
-        {this.state.singleAnime ? <div className="poster-image"><img alt="" src={this.state.singleAnime.attributes.posterImage.small} /></div> : ""}
+        {this.state.singleAnime ? this.renderPosterImage() : ""}
+        {this.state.singleAnime ? <div className="synopsis"><div id="synopsis-title">Synopsis</div><div>{this.state.singleAnime.attributes.synopsis}</div></div> : ""}
         {this.state.singleAnime ? this.renderForm(): ""}
-
-        {this.state.singleAnime ? <div className="synopsis"><span>Synopsis</span>{this.state.singleAnime.attributes.synopsis}</div> : ""}
-        {this.state.singleAnime ? <div className="info-title">Additional Information</div> : ""}
+        {this.state.singleAnime ? <div className="info-title">Anime Information</div> : ""}
         {this.state.singleAnime ? this.renderInfo() : ""}
-        <div className="genres-title">Genres:</div>
+        {this.state.genres ? <div className="genres-title">Genres</div> : ""}
         <div className="genres-div">{this.state.genres ? this.state.genres : ""}</div>
-        {/* {this.state.fireRedirect ? <Redirect push to="/favorites" /> : ""} */}
+        {this.state.streamingLinks ? <div className="streaming-links-title">Streaming Links</div> : ""}
+        {this.state.streamingLinks ? <StreamingLinks streamingLinks={this.state.streamingLinks} /> : ""}
+        {this.state.charactersId ? <div className="characters-title"><span>Characters</span></div> : ""}
+        {this.state.charactersId ? <Characters charactersId={this.state.charactersId} /> : ""}
+        {this.state.reviews ? <div className="reviews-title"><span>User Reviews</span></div> : ""}
+        {this.state.reviews ? <Reviews reviews={this.state.reviews} /> : ""}
       </div>
     )
   }

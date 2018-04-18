@@ -220,7 +220,6 @@ export default class SingleAnime extends Component {
         {this.state.charactersId ? <div className="characters-title"><span>Characters</span></div> : ""}
         {this.state.charactersId ? <Characters charactersId={this.state.charactersId} /> : ""}
         {this.state.reviews ? <div className="reviews-title"><span>User Reviews</span></div> : ""}
-        {/* <div className="reviews-container">{this.state.reviews ? this.state.reviews : ""}</div> */}
         {this.state.reviews ? <Reviews reviews={this.state.reviews} /> : ""}
       </div>
     )

@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import axios from "axios";
 import Characters from "./Characters";
 // import StreamingLinks from "./StreamingLinks";
+import Reviews from "./Reviews";
 //=====================================================================================================================================
 export default class SingleManga extends Component {
   constructor() {
@@ -11,64 +12,6 @@ export default class SingleManga extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 //=====================================================================================================================================
-  // componentDidMount() {
-  //   console.log(`https://kitsu.io/api/edge${this.props.match.url}`);
-  //   fetch(`https://kitsu.io/api/edge${this.props.match.url}`)
-  //   .then(data => data.json())
-  //   .then(data => {
-  //     this.setState({singleManga: data.data}, () => {
-  //       fetch(this.state.singleManga.relationships.genres.links.related)
-  //       .then(data => data.json())
-  //       .then(data => {
-  //         let divId = 1;
-  //         let genres = data.data.map(genre => {
-  //           return (<div key={genre.id} className="genres" id={`genre${divId++}`}>
-  //             {genre.attributes.name}
-  //           </div>)
-  //         })
-  //         this.setState({genres: genres}, () => {
-  //           fetch(this.state.singleManga.relationships.reviews.links.related)
-  //           .then(data => data.json())
-  //           .then(data => {
-  //             let reviews = data.data.map(review => {
-  //               return(<div key={review.id}>
-  //                 {review.attributes.content}<br /><br />
-  //               </div>)
-  //             })
-  //             this.setState({reviews: reviews, nextPageReviews: data.links.next}
-  //             //   , () => {
-  //             //   fetch(this.state.singleManga.relationships.installments.links.related)
-  //             //   .then(data => data.json())
-  //             //   .then(data => {
-  //             //     this.setState({streamingLinks: data.data}
-  //             //     //   , () => {
-  //             //     //   fetch(this.state.singleManga.relationships.mangaCharacters.links.self)
-  //             //     //   .then(data => data.json())
-  //             //     //   .then(data => {
-  //             //     //     let charactersId = [];
-  //             //     //     data.data.forEach(element => {
-  //             //     //       fetch(`https://kitsu.io/api/edge/anime-characters/${element.id}/character`)
-  //             //     //       .then(nestedData => nestedData.json())
-  //             //     //       .then(nestedData => {
-  //             //     //         charactersId.push(nestedData.data.id)
-  //             //     //         if (charactersId.length === data.data.length) {
-  //             //     //           this.setState({charactersId: charactersId})
-  //             //     //         }
-  //             //     //       })
-  //             //     //     })
-  //             //     //   })
-  //             //     // }
-  //             //   )
-  //             //   })
-  //             // }
-  //           )
-  //           })
-  //         })
-  //       })
-  //     })
-  //   })
-  // }
-
   componentDidMount() {
     fetch(`https://kitsu.io/api/edge${this.props.match.url}`)
     .then(data => data.json())
@@ -87,23 +30,17 @@ export default class SingleManga extends Component {
             fetch(this.state.singleManga.relationships.reviews.links.related)
             .then(data => data.json())
             .then(data => {
-              let reviews = data.data.map(review => {
-                return(<div key={review.id}>
-                  {review.attributes.content}<br /><br />
-                </div>)
-              })
-              this.setState({reviews: reviews, nextPageReviews: data.links.next}, () => {
-                fetch(this.state.singleManga.relationships.installments.links.related)
-                .then(data => data.json())
-                .then(data => {
-                  console.log(data.data);
-                  this.setState({streamingLinks: data.data}, () => {
+              this.setState({reviews: data}, () => {
+                // fetch(this.state.singleManga.relationships.mediaRelationships.links.related)
+                // .then(data => data.json())
+                // .then(data => {
+                  // this.setState({testing: data.data}, () => {
                     fetch(this.state.singleManga.relationships.mangaCharacters.links.self)
                     .then(data => data.json())
                     .then(data => {
                       let charactersId = [];
                       data.data.forEach(element => {
-                        fetch(`https://kitsu.io/api/edge/anime-characters/${element.id}/character`)
+                        fetch(`https://kitsu.io/api/edge/manga-characters/${element.id}/character`)
                         .then(nestedData => nestedData.json())
                         .then(nestedData => {
                           charactersId.push(nestedData.data.id)
@@ -113,8 +50,8 @@ export default class SingleManga extends Component {
                         })
                       })
                     })
-                  })
-                })
+                  // })
+                // })
               })
             })
           })
@@ -124,7 +61,7 @@ export default class SingleManga extends Component {
   }
 //=====================================================================================================================================
   shouldComponentUpdate() {
-    if (this.state.streamingLinks) {
+    if (this.state.charactersId) {
       return false
     } else {
       return true
@@ -267,25 +204,23 @@ export default class SingleManga extends Component {
   }
 //=====================================================================================================================================
   render() {
-    // console.log(this.state);
     return(
       <div className="SingleManga">
         {this.state.singleManga ? this.renderCoverImage() : ""}
         {this.state.singleManga ? <div className="title">{this.renderTitles()}</div> : ""}
-
         {this.state.singleManga ? this.renderPosterImage() : ""}
         {this.state.singleManga ? <div className="synopsis"><div id="synopsis-title">Synopsis</div><div>{this.state.singleManga.attributes.synopsis}</div></div> : ""}
         {this.state.singleManga ? this.renderForm(): ""}
-
-        {this.state.singleManga ? <div className="info-title">Additional Information</div> : ""}
+        {this.state.singleManga ? <div className="info-title">Manga Information</div> : ""}
         {this.state.singleManga ? this.renderInfo() : ""}
-        {/* <div className="genres-title">Genres:</div> */}
-
+        {this.state.genres ? <div className="genres-title">Genres</div> : ""}
         <div className="genres-div">{this.state.genres ? this.state.genres : ""}</div>
-        <div className="reviews-div">{this.state.reviews ? this.state.reviews : ""}</div>
+        {/* {this.state.streamingLinks ? <div className="streaming-links-title">Streaming Links</div> : ""} */}
         {/* {this.state.streamingLinks ? <StreamingLinks streamingLinks={this.state.streamingLinks} /> : ""} */}
-        {this.state.charactersId ? <div className="characters-title"><span>Characters</span></div> : <div className="characters-title"><span>Characters List Unavailable</span></div>}
+        {this.state.charactersId ? <div className="characters-title"><span>Characters</span></div> : ""}
         {this.state.charactersId ? <Characters charactersId={this.state.charactersId} /> : ""}
+        {this.state.reviews ? <div className="reviews-title"><span>User Reviews</span></div> : ""}
+        {this.state.reviews ? <Reviews reviews={this.state.reviews} /> : ""}
       </div>
     )
   }
