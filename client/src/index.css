@@ -691,7 +691,8 @@ html, body {
   border-radius: 20px;
   box-shadow: 5px 5px 5px var(--gray);
   transition: all 0.3s;
-  cursor: pointer;
+  text-decoration: none;
+  /* cursor: pointer; */
 }
 
 .SearchResultItem:hover {

@@ -14,8 +14,11 @@ export default class StreamingLinks extends Component {
       .then(data => {
         let obj = {url: streamingLink.attributes.url, siteName: data.data.attributes.siteName}
         streamingLinks.push(obj)
+        if (streamingLinks.length === this.props.streamingLinks.length) {
+          this.setState({streamingLinks: streamingLinks})
+        }
       })
-      .then(this.setState({streamingLinks: streamingLinks}))
+      // .then(this.setState({streamingLinks: streamingLinks}))
     })
   }
 //=====================================================================================================================================
@@ -30,6 +33,7 @@ export default class StreamingLinks extends Component {
   }
 //=====================================================================================================================================
   render() {
+    // console.log(this.state);
     return (
       <div className="StreamingLinks">
         {this.state.streamingLinks ? this.state.streamingLinks.length > 0 ? this.renderStreamingLinks() : "" : <div className="nsla-div">No streaming links available</div>}

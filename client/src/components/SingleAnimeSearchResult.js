@@ -13,7 +13,8 @@ export default class SingleAnimeSearchResult extends Component {
   }
 //=====================================================================================================================================
   componentDidMount() {
-    fetch(`https://kitsu.io/api/edge/${this.props.anime.data.type}/${this.props.anime.data.id}`)
+    console.log(this);
+    fetch(`https://kitsu.io/api/edge${this.props.match.url}`)
     .then(data => data.json())
     .then(data => {
       this.setState({singleAnime: data.data}, () => {

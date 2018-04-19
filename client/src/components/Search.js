@@ -56,7 +56,7 @@ export default class Search extends Component {
       <div className="Search">
         {this.state.results ? <div id="reset" onClick={() => window.location.reload()}>Search Again</div> : ""}
         {this.state.results
-          ? <SearchResults results={this.state.results} title={this.state.title} seriesType={this.state.seriesType} />
+          ? <SearchResults results={this.state.results} title={this.state.title} seriesType={this.state.seriesType} url={`https://kitsu.io/api/edge/${this.state.seriesType}?filter%5Btext%5D=${this.state.title}&page%5Blimit%5D=20`} />
           : this.renderForm()}
       </div>
     )
