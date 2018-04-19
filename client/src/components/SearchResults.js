@@ -1,6 +1,7 @@
 import React, {Component} from "react";
-import SingleAnimeSearchResult from "./SingleAnimeSearchResult";
+// import SingleAnimeSearchResult from "./SingleAnimeSearchResult";
 import SingleMangaSearchResult from "./SingleMangaSearchResult";
+import {Link} from "react-router-dom";
 //=====================================================================================================================================
 export default class SearchResults extends Component {
   constructor(props) {
@@ -20,25 +21,31 @@ export default class SearchResults extends Component {
     return this.state.results.data.map(manganime => {
       let bg = {
         backgroundImage: `url(${manganime.attributes.posterImage.original})`,
-      };
+      }
+      let singleAnime = {
+        pathname: `/${manganime.type}/${manganime.id}`,
+        searchResult: true,
+        url: this.props.url
+      }
       return (
-        <div
+        <Link
+          to={singleAnime}
           key={manganime.id}
           className="SearchResultItem"
           id={`manganime${divId++}`}
-          style={bg}
-          onClick={() => this.handleClick(manganime.type, manganime.id)}>
-          <div className="title">
-            {manganime.attributes.titles.en_us ? manganime.attributes.titles.en_us : ""}
-            {!manganime.attributes.titles.en_us && manganime.attributes.titles.en ? manganime.attributes.titles.en : ""}
-            {!manganime.attributes.titles.en && manganime.attributes.titles.en_jp ? manganime.attributes.titles.en_jp : ""}
-            {!manganime.attributes.titles.en_jp && manganime.attributes.titles.ja_jp ? manganime.attributes.titles.ja_jp : ""}
-            {manganime.attributes.titles.en_cn ? manganime.attributes.titles.en_cn : ""}
-            {!manganime.attributes.titles.en_cn && manganime.attributes.titles.zh_cn ? manganime.attributes.titles.zh_cn : ""}
-            {manganime.attributes.titles.en_kr ? manganime.attributes.titles.en_kr : ""}
-            {!manganime.attributes.titles.en_kr && manganime.attributes.titles.ko_kr ? manganime.attributes.titles.ko_kr : ""}
-          </div>
-        </div>)
+          style={bg}>
+          {/* onClick={() => this.handleClick(manganime.type, manganime.id)}> */}
+          <span className="title">
+              {manganime.attributes.titles.en_us ? manganime.attributes.titles.en_us : ""}
+              {!manganime.attributes.titles.en_us && manganime.attributes.titles.en ? manganime.attributes.titles.en : ""}
+              {!manganime.attributes.titles.en && manganime.attributes.titles.en_jp ? manganime.attributes.titles.en_jp : ""}
+              {!manganime.attributes.titles.en_jp && manganime.attributes.titles.ja_jp ? manganime.attributes.titles.ja_jp : ""}
+              {manganime.attributes.titles.en_cn ? manganime.attributes.titles.en_cn : ""}
+              {!manganime.attributes.titles.en_cn && manganime.attributes.titles.zh_cn ? manganime.attributes.titles.zh_cn : ""}
+              {manganime.attributes.titles.en_kr ? manganime.attributes.titles.en_kr : ""}
+              {!manganime.attributes.titles.en_kr && manganime.attributes.titles.ko_kr ? manganime.attributes.titles.ko_kr : ""}
+          </span>
+        </Link>)
     });
   }
 //=====================================================================================================================================
@@ -48,15 +55,20 @@ export default class SearchResults extends Component {
     return this.state.resultsNext.map(manganime => {
       let bg = {
         backgroundImage: "url(" + manganime.attributes.posterImage.original + ")",
-      };
+      }
+      let singleAnime = {
+        pathname: `/${manganime.type}/${manganime.id}`,
+        searchResult: true
+      }
       return (
-        <div
+        <Link
+          to={singleAnime}
           key={manganime.id}
           className="SearchResultItem"
           id={`manganime${divId++}`}
-          style={bg}
-          onClick={() => this.handleClick(manganime.type, manganime.id)}>
-          <div className="title">
+          style={bg}>
+          {/* onClick={() => this.handleClick(manganime.type, manganime.id)}> */}
+          <span className="title">
             {manganime.attributes.titles.en_us ? manganime.attributes.titles.en_us : ""}
             {!manganime.attributes.titles.en_us && manganime.attributes.titles.en ? manganime.attributes.titles.en : ""}
             {!manganime.attributes.titles.en && manganime.attributes.titles.en_jp ? manganime.attributes.titles.en_jp : ""}
@@ -65,30 +77,30 @@ export default class SearchResults extends Component {
             {!manganime.attributes.titles.en_cn && manganime.attributes.titles.zh_cn ? manganime.attributes.titles.zh_cn : ""}
             {manganime.attributes.titles.en_kr ? manganime.attributes.titles.en_kr : ""}
             {!manganime.attributes.titles.en_kr && manganime.attributes.titles.ko_kr ? manganime.attributes.titles.ko_kr : ""}
-          </div>
-        </div>)
+          </span>
+        </Link>)
     });
   }
 //=====================================================================================================================================
-  handleClick(type, id) {
-    fetch(`https://kitsu.io/api/edge/${type}/${id}`)
-    .then(data => data.json())
-    .then(data => {
-      if (type === "anime") {
-        this.setState({
-          results: false,
-          resultsNext: false,
-          anime: data
-        })
-      } else if (type === "manga") {
-        this.setState({
-          results: false,
-          resultsNext: false,
-          manga: data
-        })
-      }
-    })
-  }
+  // handleClick(type, id) {
+  //   fetch(`https://kitsu.io/api/edge/${type}/${id}`)
+  //   .then(data => data.json())
+  //   .then(data => {
+  //     if (type === "anime") {
+  //       this.setState({
+  //         results: false,
+  //         resultsNext: false,
+  //         anime: data
+  //       })
+  //     } else if (type === "manga") {
+  //       this.setState({
+  //         results: false,
+  //         resultsNext: false,
+  //         manga: data
+  //       })
+  //     }
+  //   })
+  // }
 //=====================================================================================================================================
   nextPage() {
     let offsetIncrement = this.state.offset + 20;
@@ -133,7 +145,7 @@ export default class SearchResults extends Component {
         <div></div>
         {this.state.results ? this.renderResults() : ""}
         {this.state.resultsNext ? this.renderResultsNext() : ""}
-        {this.state.anime ? <SingleAnimeSearchResult anime={this.state.anime} /> : ""}
+        {/* {this.state.anime ? <SingleAnimeSearchResult anime={this.state.anime} /> : ""} */}
         {this.state.manga ? <SingleMangaSearchResult manga={this.state.manga} /> : ""}
       </div>);
   }

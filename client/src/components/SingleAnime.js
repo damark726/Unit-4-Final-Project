@@ -203,7 +203,16 @@ export default class SingleAnime extends Component {
     })
   }
 //=====================================================================================================================================
+  // handleClick() {
+  //   fetch(this.props.location.url)
+  //   .then(data => data.json())
+  //   .then(data => {
+  //     this.setState({})
+  //   })
+  // }
+//=====================================================================================================================================
   render() {
+    console.log(this.props);
     return(
       <div className="SingleAnime">
         {this.state.singleAnime ? this.renderCoverImage() : ""}
@@ -221,6 +230,8 @@ export default class SingleAnime extends Component {
         {this.state.charactersId ? <Characters charactersId={this.state.charactersId} /> : ""}
         {this.state.reviews ? <div className="reviews-title"><span>User Reviews</span></div> : ""}
         {this.state.reviews ? <Reviews reviews={this.state.reviews} /> : ""}
+
+        {this.props.location.searchResult ? <div onClick={this.props.history.goBack}>Ayeeeee</div> : ""}
       </div>
     )
   }
