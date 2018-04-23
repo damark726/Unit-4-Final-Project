@@ -34,18 +34,28 @@ export default class RelatedMedia extends Component {
 
   renderRelatedMedia() {
     return this.state.relatedMedia.map((manganime, index) => {
-      return (
-        <div key={index}>
-          {manganime.canonicalTitle}
-        </div>
-      )
+      console.log(manganime);
+      if (manganime.posterImage) {
+        let bg = {backgroundImage: `url(${manganime.posterImage.large})`}
+        return (
+          <div key={index} style={bg}>
+            <span>{manganime.canonicalTitle}</span>
+          </div>
+        )
+      } else {
+        let bg = {backgroundImage: `url(http://res.cloudinary.com/damark726/image/upload/v1523327404/No_image_available_ed3rvn.svg)`, backgroundColor: `#bbbbbb`}
+        return (
+          <div key={index} style={bg}>
+            <span>{manganime.canonicalTitle}</span>
+          </div>
+        )
+      }
     })
   }
 //=====================================================================================================================================
   render() {
-    // console.log(this.state.relatedMedia);
     return (
-      <div>
+      <div className="RelatedMedia">
         {this.state.relatedMedia ? this.renderRelatedMedia() : ""}
       </div>
     )
