@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import {Redirect} from "react-router-dom";
 //=====================================================================================================================================
 export default class RelatedMedia extends Component {
   constructor() {
@@ -20,7 +21,7 @@ export default class RelatedMedia extends Component {
             fetch(`https://kitsu.io/api/edge/${manganime.type}/${manganime.id}`)
             .then(nestedData => nestedData.json())
             .then(nestedData => {
-              let info = nestedData.data.attributes
+              let info = nestedData.data
               relatedMediaInfo.push(info)
               if (relatedMediaInfo.length === relatedMedia.length) {
                 this.setState({relatedMedia: relatedMediaInfo})
@@ -31,22 +32,30 @@ export default class RelatedMedia extends Component {
       })
     })
   }
-
+//=====================================================================================================================================
+  handleClick(type, id) {
+    this.setState({
+      type: type,
+      id: id
+    }, () => {
+      window.location.reload()
+    })
+  }
+//=====================================================================================================================================
   renderRelatedMedia() {
     return this.state.relatedMedia.map((manganime, index) => {
-      console.log(manganime);
-      if (manganime.posterImage) {
-        let bg = {backgroundImage: `url(${manganime.posterImage.large})`}
+      if (manganime.attributes.posterImage) {
+        let bg = {backgroundImage: `url(${manganime.attributes.posterImage.large})`}
         return (
-          <div key={index} style={bg}>
-            <span>{manganime.canonicalTitle}</span>
+          <div key={index} style={bg} onClick={() => this.handleClick(manganime.type, manganime.id)}>
+            <span>{manganime.attributes.canonicalTitle}</span>
           </div>
         )
       } else {
         let bg = {backgroundImage: `url(http://res.cloudinary.com/damark726/image/upload/v1523327404/No_image_available_ed3rvn.svg)`, backgroundColor: `#bbbbbb`}
         return (
-          <div key={index} style={bg}>
-            <span>{manganime.canonicalTitle}</span>
+          <div key={index} style={bg} onClick={() => this.handleClick(manganime.type, manganime.id)}>
+            <span>{manganime.attributes.canonicalTitle}</span>
           </div>
         )
       }
@@ -54,9 +63,11 @@ export default class RelatedMedia extends Component {
   }
 //=====================================================================================================================================
   render() {
+    console.log(this.state);
     return (
       <div className="RelatedMedia">
         {this.state.relatedMedia ? this.renderRelatedMedia() : ""}
+        {this.state.type && this.state.id ? <Redirect push to={`/${this.state.type}/${this.state.id}`} /> : ""}
       </div>
     )
   }
