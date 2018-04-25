@@ -3,6 +3,7 @@ import axios from "axios";
 import Characters from "./Characters";
 // import StreamingLinks from "./StreamingLinks";
 import Reviews from "./Reviews";
+import RelatedMedia from "./RelatedMedia";
 //=====================================================================================================================================
 export default class SingleManga extends Component {
   constructor() {
@@ -18,35 +19,41 @@ export default class SingleManga extends Component {
     .then(data => {
       this.setState({singleManga: data.data}, () => {
         fetch(this.state.singleManga.relationships.genres.links.related)
-        .then(data => data.json())
-        .then(data => {
+        .then(secondData => secondData.json())
+        .then(secondData => {
           let divId = 1;
-          let genres = data.data.map(genre => {
+          let genres = secondData.data.map(genre => {
             return (<div key={genre.id} className="genres" id={`genre${divId++}`}>
               {genre.attributes.name}
             </div>)
           })
           this.setState({genres: genres}, () => {
             fetch(this.state.singleManga.relationships.reviews.links.related)
-            .then(data => data.json())
-            .then(data => {
-              this.setState({reviews: data}, () => {
-                // fetch(this.state.singleManga.relationships.mediaRelationships.links.related)
-                // .then(data => data.json())
-                // .then(data => {
-                  // this.setState({testing: data.data}, () => {
-                    fetch(this.state.singleManga.relationships.mangaCharacters.links.self)
-                    .then(data => data.json())
-                    .then(data => {
-                      let charactersId = [];
-                      data.data.forEach(element => {
-                        fetch(`https://kitsu.io/api/edge/manga-characters/${element.id}/character`)
-                        .then(nestedData => nestedData.json())
-                        .then(nestedData => {
-                          charactersId.push(nestedData.data.id)
-                          if (charactersId.length === data.data.length) {
-                            this.setState({charactersId: charactersId})
-                          }
+            .then(thirdData => thirdData.json())
+            .then(thirdData => {
+              this.setState({reviews: thirdData}, () => {
+                // fetch(this.state.singleManga.relationships.streamingLinks.links.related)
+                // .then(fourthData => fourthData.json())
+                // .then(fourthData => {
+                  // this.setState({streamingLinks: fourthData.data}, () => {
+                    fetch(this.state.singleManga.relationships.mediaRelationships.links.related)
+                    .then(fifthData => fifthData.json())
+                    .then(fifthData => {
+                      this.setState({relatedMedia: fifthData.data}, () => {
+                        fetch(this.state.singleManga.relationships.mangaCharacters.links.self)
+                        .then(sixthData => sixthData.json())
+                        .then(sixthData => {
+                          let charactersId = [];
+                          sixthData.data.forEach(element => {
+                            fetch(`https://kitsu.io/api/edge/manga-characters/${element.id}/character`)
+                            .then(seventhData => seventhData.json())
+                            .then(seventhData => {
+                              charactersId.push(seventhData.data.id)
+                              if (charactersId.length === sixthData.data.length) {
+                                this.setState({charactersId: charactersId})
+                              }
+                            })
+                          })
                         })
                       })
                     })
@@ -204,6 +211,7 @@ export default class SingleManga extends Component {
   }
 //=====================================================================================================================================
   render() {
+    // console.log(this.props);
     return(
       <div className="SingleManga">
         {this.state.singleManga ? this.renderCoverImage() : ""}
@@ -214,18 +222,17 @@ export default class SingleManga extends Component {
         {this.state.singleManga ? <div className="info-title">Manga Information</div> : ""}
         {this.state.singleManga ? this.renderInfo() : ""}
         {this.state.genres ? <div className="genres-title">Genres</div> : ""}
-        <div className="genres-div">{this.state.genres ? this.state.genres : ""}</div>
+        {this.state.genres ? <div className="genres-div">{this.state.genres}</div> : ""}
         {/* {this.state.streamingLinks ? <div className="streaming-links-title">Streaming Links</div> : ""} */}
         {/* {this.state.streamingLinks ? <StreamingLinks streamingLinks={this.state.streamingLinks} /> : ""} */}
         {this.state.charactersId ? <div className="characters-title"><span>Characters</span></div> : ""}
         {this.state.charactersId ? <Characters charactersId={this.state.charactersId} /> : ""}
         {this.state.reviews ? <div className="reviews-title"><span>User Reviews</span></div> : ""}
         {this.state.reviews ? <Reviews reviews={this.state.reviews} /> : ""}
+        {this.state.relatedMedia ? <div className="related-media-title"><span>Related Media</span></div> : ""}
+        {this.state.relatedMedia ? <RelatedMedia relatedMedia={this.state.relatedMedia} /> : ""}
       </div>
     )
   }
 }
-//  fetch =>  this.state.singleManga.mediaRelationships.links.related
-//  .then =>  data.data.relationships.destination.links.self
-//  .then =>  data.data.type & data.data.id
 //=====================================================================================================================================

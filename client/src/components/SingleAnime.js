@@ -13,54 +13,6 @@ export default class SingleAnime extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 //=====================================================================================================================================
-  // componentDidMount() {
-  //   fetch(`https://kitsu.io/api/edge${this.props.match.url}`)
-  //   .then(data => data.json())
-  //   .then(data => {
-  //     this.setState({singleAnime: data.data}, () => {
-  //       fetch(this.state.singleAnime.relationships.genres.links.related)
-  //       .then(data => data.json())
-  //       .then(data => {
-  //         let divId = 1;
-  //         let genres = data.data.map(genre => {
-  //           return (<div key={genre.id} className="genres" id={`genre${divId++}`}>
-  //             {genre.attributes.name}
-  //           </div>)
-  //         })
-  //         this.setState({genres: genres}, () => {
-  //           fetch(this.state.singleAnime.relationships.reviews.links.related)
-  //           .then(data => data.json())
-  //           .then(data => {
-  //             this.setState({reviews: data}, () => {
-  //               fetch(this.state.singleAnime.relationships.streamingLinks.links.related)
-  //               .then(data => data.json())
-  //               .then(data => {
-  //                 this.setState({streamingLinks: data.data}, () => {
-  //                   fetch(this.state.singleAnime.relationships.animeCharacters.links.self)
-  //                   .then(data => data.json())
-  //                   .then(data => {
-  //                     let charactersId = [];
-  //                     data.data.forEach(element => {
-  //                       fetch(`https://kitsu.io/api/edge/anime-characters/${element.id}/character`)
-  //                       .then(nestedData => nestedData.json())
-  //                       .then(nestedData => {
-  //                         charactersId.push(nestedData.data.id)
-  //                         if (charactersId.length === data.data.length) {
-  //                           this.setState({charactersId: charactersId})
-  //                         }
-  //                       })
-  //                     })
-  //                   })
-  //                 })
-  //               })
-  //             })
-  //           })
-  //         })
-  //       })
-  //     })
-  //   })
-  // }
-
   componentDidMount() {
     fetch(`https://kitsu.io/api/edge${this.props.match.url}`)
     .then(data => data.json())
@@ -259,7 +211,7 @@ export default class SingleAnime extends Component {
   }
 //=====================================================================================================================================
   render() {
-    // console.log(this.state);
+    // console.log(this.props);
     return(
       <div className="SingleAnime">
         {this.state.singleAnime ? this.renderCoverImage() : ""}
@@ -277,7 +229,6 @@ export default class SingleAnime extends Component {
         {this.state.charactersId ? <Characters charactersId={this.state.charactersId} /> : ""}
         {this.state.reviews ? <div className="reviews-title"><span>User Reviews</span></div> : ""}
         {this.state.reviews ? <Reviews reviews={this.state.reviews} /> : ""}
-
         {this.state.relatedMedia ? <div className="related-media-title"><span>Related Media</span></div> : ""}
         {this.state.relatedMedia ? <RelatedMedia relatedMedia={this.state.relatedMedia} /> : ""}
 
