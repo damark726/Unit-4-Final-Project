@@ -63,7 +63,6 @@ export default class RelatedMedia extends Component {
   }
 //=====================================================================================================================================
   render() {
-    console.log(this.state);
     return (
       <div className="RelatedMedia">
         {this.state.relatedMedia ? this.renderRelatedMedia() : ""}
