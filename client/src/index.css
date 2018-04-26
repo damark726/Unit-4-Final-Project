@@ -562,9 +562,7 @@ html, body {
   grid-template: 1fr / repeat(600, 19.3vh);
   grid-column-gap: 0.75em;
   background-color: var(--white2);
-  /* border-left: 6px solid var(--gray2); */
-  /* border-right: 6px solid var(--gray2); */
-  box-shadow: 10px 10px 10px var(--gray2);
+  box-shadow: 6px 6px 6px var(--gray2);
   overflow-x: scroll;
 }
 
